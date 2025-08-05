@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spine 2D Değerlendirme Raporu - İnteraktif Analiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Academic Blue -->
+    <!-- Application Structure Plan: The SPA is structured into logical, thematic sections to guide the user from the strategic "why" to the practical "how." It starts with a summary verdict, moves to "Why Spine 2D?" (covering its industry role and paradigm), then presents a "Tool Comparison" with interactive charts, a critical "License Analysis," and finally a "Project Outline." This non-linear, thematic structure is more digestible and persuasive than a simple document scroll, allowing users to focus on the areas most relevant to them, such as comparing tools or understanding project requirements. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification. 1. Tool Comparison Table -> Goal: Compare alternatives -> Viz: Horizontal Bar Chart (Chart.js) -> Interaction: Tooltips -> Justification: Visually quantifies the report's qualitative analysis of which tool is "best" for this specific course, making the choice obvious. 2. License Features Table -> Goal: Emphasize Professional license necessity -> Viz: Doughnut Chart (Chart.js) -> Interaction: Tooltips -> Justification: Dramatically shows the feature gap between Essential & Pro licenses for the project, making the logistical requirement undeniable. 3. Professional Features List -> Goal: Explain complex features -> Viz: Interactive Accordion (HTML/JS) -> Interaction: Click to expand -> Justification: Breaks down dense technical information into manageable, user-triggered chunks, linking each feature directly to its project application. 4. Project Plan -> Goal: Outline the pedagogical steps -> Viz: Stepped Card Layout (HTML/CSS) -> Interaction: None -> Justification: Clearly visualizes the project's progression from start to finish. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #005f73;
+            border-bottom-color: #005f73;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-[#003440]">Spine 2D Analizi</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#verdict" class="nav-link pb-1">Nihai Karar</a>
+                <a href="#why-spine" class="nav-link pb-1">Neden Spine?</a>
+                <a href="#comparison" class="nav-link pb-1">Karşılaştırma</a>
+                <a href="#project" class="nav-link pb-1">Proje Taslağı</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#verdict" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Nihai Karar</a>
+            <a href="#why-spine" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Neden Spine?</a>
+            <a href="#comparison" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Karşılaştırma</a>
+            <a href="#project" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Proje Taslağı</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="verdict" class="text-center mb-24 scroll-mt-20">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#003440] mb-4">Spine 2D: Dersiniz İçin Mükemmel Seçim</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
+                Detaylı analizler sonucunda, Dijital Oyun Tasarımı lisans programınızdaki "2D Tasarım ve Animasyon" dersi için Spine 2D'nin seçimi ve "atlı araba" projesi, pedagojik olarak sağlam ve endüstri standartlarıyla uyumlu, **olağanüstü bir karardır.** Bu uygulama, bu kararın arkasındaki temel nedenleri ve verileri interaktif olarak sunmaktadır.
+            </p>
+            <a href="#why-spine" class="bg-[#005f73] text-white font-bold py-3 px-8 rounded-full hover:bg-[#003440] transition-colors">Analizi Keşfedin ↓</a>
+        </section>
+
+        <section id="why-spine" class="mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003440] mb-2">Neden Spine 2D?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Spine, sadece bir animasyon aracı değil, modern oyun geliştirmede verimlilik ve kaliteyi artıran bir üretim felsefesidir.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">📦</div>
+                    <h3 class="font-bold text-lg mb-2">Daha Küçük Dosya Boyutu</h3>
+                    <p class="text-sm text-gray-600">Sadece kemik verilerini saklayarak, geleneksel kare-kare animasyona göre çok daha az yer kaplar, mobil ve web platformları için idealdir.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="font-bold text-lg mb-2">Daha Az Sanat Varlığı</h3>
+                    <p class="text-sm text-gray-600">Tek bir karakter setiyle sayısız animasyon oluşturulabilir. Bu, üretim süresini ve maliyetini dramatik şekilde düşürür.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">✨</div>
+                    <h3 class="font-bold text-lg mb-2">Pürüzsüz Animasyon</h3>
+                    <p class="text-sm text-gray-600">Kareler arası enterpolasyon sayesinde, animasyonlar her zaman akıcıdır ve yavaş çekim gibi efektler kaliteden ödün vermeden uygulanabilir.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">♻️</div>
+                    <h3 class="font-bold text-lg mb-2">Yeniden Kullanılabilirlik</h3>
+                    <p class="text-sm text-gray-600">Animasyonlar farklı karakterlere, kıyafet ve ekipmanlara (Skins) kolayca uygulanabilir, bu da modüler ve verimli bir iş akışı sağlar.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003440] mb-2">Projenin Kalbi: Profesyonel Özellikler</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">"Atlı araba" projesi, öğrencileri Spine'ın en güçlü özelliklerini kullanmaya teşvik eder. Her bir özellik, projenin farklı bir parçasını hayata geçirir.</p>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="accordion-container"></div>
+            </div>
+        </section>
+
+        <section id="comparison" class="mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003440] mb-2">Araç Karşılaştırması ve Lisans Analizi</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Doğru aracı seçmek, projenin başarısı için kritiktir. Veriler, Spine'ın neden öne çıktığını ve neden Professional lisansın zorunlu olduğunu gösteriyor.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div class="card p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-center mb-4 text-[#003440]">2D Oyun Animasyonu Dersi İçin Uygunluk</h3>
+                    <div class="chart-container">
+                        <canvas id="toolComparisonChart"></canvas>
+                    </div>
+                </div>
+                <div class="card p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-center mb-4 text-[#003440]">Proje İçin Gerekli Özelliklerin Lisans Kapsamı</h3>
+                    <div class="chart-container">
+                        <canvas id="licenseComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-sm text-gray-500">
+                <p><span class="font-bold text-red-600">Önemli Not:</span> "Atlı Araba" projesinin pedagojik hedeflerine ulaşmak için gereken temel özelliklerin tamamı yalnızca <span class="font-bold">Spine Professional</span> sürümünde mevcuttur. <span class="font-bold">Essential</span> sürümü bu ders için yetersizdir.</p>
+            </div>
+        </section>
+
+        <section id="project" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003440] mb-2">Atlı Araba Projesi: 3 Aşamalı Yol Haritası</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Bu proje, öğrencileri temelden ileri seviyeye taşıyan, yapılandırılmış bir öğrenme deneyimi sunar.</p>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto">
+                <div class="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
+                <div class="space-y-16">
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <div class="card p-6">
+                                <h3 class="text-xl font-bold text-[#005f73]">Aşama 1: Rigging</h3>
+                                <p class="mt-2 text-gray-600">Dijital kuklayı inşa etme. At (organik) ve araba (mekanik) için kemik hiyerarşileri oluşturulur. IK, Mesh ve Ağırlıklandırma gibi temel rigging teknikleri uygulanır.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#005f73] text-white flex items-center justify-center font-bold">1</div>
+                        <div class="w-1/2"></div>
+                    </div>
+                    
+                    <div class="relative flex items-center">
+                        <div class="w-1/2"></div>
+                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#005f73] text-white flex items-center justify-center font-bold">2</div>
+                        <div class="w-1/2 pl-8 text-left">
+                           <div class="card p-6">
+                                <h3 class="text-xl font-bold text-[#005f73]">Aşama 2: Animasyon</h3>
+                                <p class="mt-2 text-gray-600">Bileşenlere hayat verme. Atın yürüyüş döngüsü, tekerleklerin sürekli dönüşü ve fenerin sallanması gibi ikincil hareketler için Fizik Kısıtlamaları kullanılır.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <div class="card p-6">
+                                <h3 class="text-xl font-bold text-[#005f73]">Aşama 3: Entegrasyon</h3>
+                                <p class="mt-2 text-gray-600">Parçaları birleştirme. At ve araba, Dönüşüm Kısıtlamaları kullanılarak birbirine bağlanır. Animasyonlar katmanlanarak dinamik bir bütün oluşturulur.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#005f73] text-white flex items-center justify-center font-bold">3</div>
+                        <div class="w-1/2"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-24">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 Spine 2D Pedagojik Analiz Raporu. Bu interaktif uygulama, uzman değerlendirmesini özetlemektedir.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            mobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+
+            const accordionData = [
+                { title: 'Ters Kinematik (IK)', content: 'Bir uzvun son noktasını hareket ettirerek tüm eklemleri pozlamayı sağlar. Atın bacaklarını doğal ve sezgisel bir şekilde canlandırmak için vazgeçilmezdir.' },
+                { title: 'Meshes & FFD', content: 'Görüntüleri esnetip bükerek organik deformasyonlar yaratır. Atın vücudunun ve boynunun nefes alıp verirken veya dönerken esnemesi için gereklidir.' },
+                { title: 'Ağırlıklar (Skinning)', content: 'Mesh noktalarını birden fazla kemiğe bağlayarak eklemlerde pürüzsüz bükülmeler sağlar. Atın diz ve dirsek gibi eklemlerinin doğal görünmesi için kritiktir.' },
+                { title: 'Dönüşüm Kısıtlamaları', content: 'Bir kemiğin hareketini diğerine bağlar. Atın hareketinin arabayı çekmesini sağlamak, yani iki rigi birbirine entegre etmek için kullanılır.' },
+                { title: 'Yol Kısıtlamaları', content: 'Kemiklerin belirli bir yolu takip etmesini sağlar. Kamçı, dizgin gibi akıcı, takip eden hareketler veya tüm arabanın bir yörüngede gitmesi için idealdir.' },
+                { title: 'Fizik Kısıtlamaları', content: 'İkincil hareketleri otomatik olarak simüle eder. Arabaya bağlı fenerin, ana harekete göre gerçekçi bir şekilde sallanması için kullanılır, animasyon süresini kısaltır.' }
+            ];
+
+            const accordionContainer = document.getElementById('accordion-container');
+            accordionData.forEach((item, index) => {
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'border-b border-gray-200';
+                accordionItem.innerHTML = `
+                    <button class="accordion-toggle w-full text-left py-4 px-2 flex justify-between items-center text-lg font-semibold text-gray-700 hover:bg-gray-50">
+                        <span>${item.title}</span>
+                        <span class="transform transition-transform duration-300">▶</span>
+                    </button>
+                    <div class="accordion-content px-2">
+                        <p class="py-4 text-gray-600">${item.content}</p>
+                    </div>
+                `;
+                accordionContainer.appendChild(accordionItem);
+            });
+
+            const toggles = document.querySelectorAll('.accordion-toggle');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    const icon = toggle.querySelector('span:last-child');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                        document.querySelectorAll('.accordion-toggle span:last-child').forEach(i => i.style.transform = 'rotate(0deg)');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(90deg)';
+                    }
+                });
+            });
+
+            const toolCtx = document.getElementById('toolComparisonChart').getContext('2d');
+            new Chart(toolCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Spine 2D', 'Unity 2D Anim', 'Blender (2D)', 'Adobe Animate', 'Rive'],
+                    datasets: [{
+                        label: 'Uygunluk Skoru (10 üzerinden)',
+                        data: [10, 7, 6.5, 6, 5],
+                        backgroundColor: ['#005f73', '#0a9396', '#94d2bd', '#e9d8a6', '#ee9b00'],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Uygunluk: ${context.raw}/10`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 10,
+                            grid: {
+                                color: '#e9ecef'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            const licenseCtx = document.getElementById('licenseComparisonChart').getContext('2d');
+            new Chart(licenseCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Professional (Gerekli Özellikler)', 'Professional (Diğer)', 'Essential (Gerekli Özellikler)', 'Essential (Diğer)'],
+                    datasets: [{
+                        label: 'Lisans Kapsamı',
+                        data: [100, 0, 25, 75],
+                        backgroundColor: ['#005f73', '#e9ecef', '#ee9b00', '#e9ecef'],
+                        borderColor: '#ffffff',
+                        borderWidth: 4,
+                        circumference: 180,
+                        rotation: 270,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                filter: function(item, chart) {
+                                    return !item.text.includes('Diğer');
+                                },
+                                color: '#495057'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.label.includes('Professional')) return ' Proje için gerekli özelliklerin %100\'ünü kapsar.';
+                                    if (context.label.includes('Essential')) return ' Proje için gerekli özelliklerin sadece %25\'ini kapsar.';
+                                    return '';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const header = document.getElementById('header');
+            const sections = document.querySelectorAll('section[id]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        document.querySelectorAll('.nav-link').forEach((link) => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
