@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kariyer Pusulası - İnteraktif Bölüm Seçim Rehberi</title>
+    <title>Aydemav Kariyer Pusulası - Bölüm Seçim Rehberi</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@
         }
 
        .container {
-            max-width: 1200px;
+            max-width: 1400px; /* Genişletildi */
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -323,6 +323,7 @@
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid var(--light-gray);
+            vertical-align: middle;
         }
         th {
             background-color: var(--primary-color);
@@ -347,6 +348,11 @@
         }
         .rating-cell .rating-star {
              color: var(--accent-color);
+        }
+       .analyst-note-cell {
+            min-width: 300px;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
         }
 
 
@@ -500,7 +506,7 @@
 
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="navbar-brand"><i class="fas fa-compass"></i> Kariyer Pusulası</a>
+            <a href="#" class="navbar-brand"><i class="fas fa-compass"></i> Aydemav Kariyer Pusulası</a>
             <div class="menu-toggle"><i class="fas fa-bars"></i></div>
             <ul class="nav-links">
                 <li><a href="#lisans" class="active">Lisans (4 Yıllık)</a></li>
@@ -525,8 +531,7 @@
             <div class="container">
                 <h2 class="section-title">Lisans Programları (4 Yıllık)</h2>
                 <div class="department-grid" id="lisans-grid">
-                    <!-- Lisans cards will be dynamically inserted here -->
-                </div>
+                    </div>
             </div>
         </section>
 
@@ -534,8 +539,7 @@
             <div class="container">
                 <h2 class="section-title">Önlisans Programları (2 Yıllık)</h2>
                 <div class="department-grid" id="onlisans-grid">
-                    <!-- Önlisans cards will be dynamically inserted here -->
-                </div>
+                    </div>
             </div>
         </section>
 
@@ -553,11 +557,11 @@
                                 <th>Uzaktan Çalışma</th>
                                 <th>Girişimcilik</th>
                                 <th>YZ Dayanıklılığı</th>
+                                <th>Analist Notu</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Lisans table rows will be dynamically inserted here -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
                 <div class="table-container" style="margin-top: 40px;">
@@ -572,11 +576,11 @@
                                 <th>Girişimcilik</th>
                                 <th>YZ Dayanıklılığı</th>
                                 <th>DGS Potansiyeli</th>
+                                <th>Analist Notu</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Önlisans table rows will be dynamically inserted here -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -663,7 +667,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Kariyer Pusulası. Tüm hakları saklıdır. Bu site, kariyer kararları için bir rehber olarak hazırlanmıştır.</p>
+            <p>&copy; Aydemav Kariyer Pusulası. Tüm hakları saklıdır.</p>
         </div>
     </footer>
 
@@ -671,13 +675,11 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <div id="modal-body-content" class="modal-body">
-                <!-- Modal content will be dynamically inserted here -->
-            </div>
+                </div>
         </div>
     </div>
 
 <script>
-// Data for all departments, extracted from the report
 const departments = {
     lisans: [
         {
@@ -690,21 +692,13 @@ const departments = {
                 { icon: 'fa-house-laptop', text: 'Uzaktan Çalışmaya Çok Uygun' }
             ],
             ratings: { isBulma: 3, maas: 4, uzaktan: 5, girisimcilik: 5, yz: 3 },
+            analystNote: "Teknoloji, sanat ve psikolojinin kesişiminde yer alan heyecan verici bir alandır. Başarı için sadece Adobe programlarını bilmek yetmez; kullanıcı deneyimi (UX) prensipleri, pazarlama stratejileri ve proje yönetimi becerileri de öğrenilmelidir. Behance, Dribbble gibi platformlarda aktif bir portfolyo oluşturmak kritiktir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Dijitalleşen dünyada görsel içeriğe olan talep patlamıştır. Reklam ajansları, yazılım şirketleri (UI/UX), oyun stüdyoları gibi alanlarda iş imkanları geniştir. Ancak iş bulma, diplomadan çok güçlü bir portfolyoya bağlıdır.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025 için "Görsel İletişim Uzmanı" ortalama maaşı 39.500 TL olsa da, bu başlangıç seviyesidir. Özellikle UI/UX (Kullanıcı Arayüzü/Kullanıcı Deneyimi) tasarımı gibi alanlarda uzmanlaşanların maaşları çok daha yüksektir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Çok Yüksek. Uzaktan çalışmaya en uygun alanlardan biridir. Freelance veya "dijital göçebe" olarak çalışma özgürlüğü sunar.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Çok Yüksek. Kolaylıkla freelance olarak çalışmaya başlayabilir ve zamanla kendi tasarım ajansını kurabilir. Düşük başlangıç maliyetleri ve yüksek talep, bu alanı girişimcilik için cazip kılar.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Orta (Adaptasyon Koşuluyla). YZ tabanlı araçlar basit görseller üretebilir. Ancak bir markanın bütünsel görsel kimliğini yaratmak, bir kullanıcı arayüzünün stratejisini tasarlamak gibi görevler stratejik düşünme ve yaratıcılık gerektirir. Geleceğin tasarımcısı, YZ'yi bir araç olarak kullanan bir "sanat yönetmeni" olacaktır.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Teknoloji, sanat ve psikolojinin kesişiminde yer alan heyecan verici bir alandır. Başarı için sadece Adobe programlarını bilmek yetmez; kullanıcı deneyimi (UX) prensipleri, pazarlama stratejileri ve proje yönetimi becerileri de öğrenilmelidir. Behance, Dribbble gibi platformlarda aktif bir portfolyo oluşturmak kritiktir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Dijitalleşen dünyada görsel içeriğe olan talep patlamıştır. Reklam ajansları, yazılım şirketleri (UI/UX), oyun stüdyoları gibi alanlarda iş imkanları geniştir. Ancak iş bulma, diplomadan çok güçlü bir portfolyoya bağlıdır.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025 için "Görsel İletişim Uzmanı" ortalama maaşı 39.500 TL olsa da, bu başlangıç seviyesidir. Özellikle UI/UX (Kullanıcı Arayüzü/Kullanıcı Deneyimi) tasarımı gibi alanlarda uzmanlaşanların maaşları çok daha yüksektir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Çok Yüksek. Uzaktan çalışmaya en uygun alanlardan biridir. Freelance veya "dijital göçebe" olarak çalışma özgürlüğü sunar.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Çok Yüksek. Kolaylıkla freelance olarak çalışmaya başlayabilir ve zamanla kendi tasarım ajansını kurabilir. Düşük başlangıç maliyetleri ve yüksek talep, bu alanı girişimcilik için cazip kılar.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Orta (Adaptasyon Koşuluyla). YZ tabanlı araçlar basit görseller üretebilir. Ancak bir markanın bütünsel görsel kimliğini yaratmak, bir kullanıcı arayüzünün stratejisini tasarlamak gibi görevler stratejik düşünme ve yaratıcılık gerektirir. Geleceğin tasarımcısı, YZ'yi bir araç olarak kullanan bir "sanat yönetmeni" olacaktır.</p>
             `
         },
         {
@@ -717,21 +711,13 @@ const departments = {
                 { icon: 'fa-scissors', text: 'Türkiye\'nin Güçlü Sektörü' }
             ],
             ratings: { isBulma: 3, maas: 4, uzaktan: 4, girisimcilik: 5, yz: 4 },
+            analystNote: "Yaratıcılığın ve iş zekasının birleştiği bir noktadadır. Sadece iyi tasarım yapmak değil, aynı zamanda marka yönetimi, pazarlama ve finans bilgisi de gerekir. Üniversite hayatı boyunca işletme ve dijital pazarlama yetkinliklerini geliştirmek, başarıya giden yolu kısaltacaktır.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Sektör rekabetçidir ve iş bulma kolaylığı, büyük ölçüde adayın yaratıcılığına ve portfolyosunun gücüne bağlıdır.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025 için "Moda Tasarımcısı" ortalama maaşı 55.200 TL, "Tekstil Tasarımcısı" ise 54.300 TL'dir. Kendi markasını yaratanlar için kazanç potansiyeli sınırsızdır.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Tasarım sürecinin büyük bir kısmı uzaktan yürütülebilir. Bu durum, freelance olarak birden fazla markaya hizmet vermeye olanak tanır.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Çok Yüksek. Kendi giyim markasını veya tasarım atölyesini kurmak için en uygun alanlardan biridir. E-ticaret platformları ve sosyal medya, küçük sermaye ile başlamayı kolaylaştırmaktadır.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Yüksek. YZ, trend analizi yapabilir veya basit desenler oluşturabilir. Ancak moda; kültür, duygu ve özgünlükten beslenen bir sanat formudur ve YZ'nin bir tasarımcının sezgisel yaratıcılığını kopyalaması mümkün değildir.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Yaratıcılığın ve iş zekasının birleştiği bir noktadadır. Sadece iyi tasarım yapmak değil, aynı zamanda marka yönetimi, pazarlama ve finans bilgisi de gerekir. Üniversite hayatı boyunca işletme ve dijital pazarlama yetkinliklerini geliştirmek, başarıya giden yolu kısaltacaktır.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Sektör rekabetçidir ve iş bulma kolaylığı, büyük ölçüde adayın yaratıcılığına ve portfolyosunun gücüne bağlıdır.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025 için "Moda Tasarımcısı" ortalama maaşı 55.200 TL, "Tekstil Tasarımcısı" ise 54.300 TL'dir. Kendi markasını yaratanlar için kazanç potansiyeli sınırsızdır.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Tasarım sürecinin büyük bir kısmı uzaktan yürütülebilir. Bu durum, freelance olarak birden fazla markaya hizmet vermeye olanak tanır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Çok Yüksek. Kendi giyim markasını veya tasarım atölyesini kurmak için en uygun alanlardan biridir. E-ticaret platformları ve sosyal medya, küçük sermaye ile başlamayı kolaylaştırmaktadır.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Yüksek. YZ, trend analizi yapabilir veya basit desenler oluşturabilir. Ancak moda; kültür, duygu ve özgünlükten beslenen bir sanat formudur ve YZ'nin bir tasarımcının sezgisel yaratıcılığını kopyalaması mümkün değildir.</p>
             `
         },
         {
@@ -744,21 +730,13 @@ const departments = {
                 { icon: 'fa-building', text: 'Geniş Kamu ve Özel Sektör Ağı' }
             ],
             ratings: { isBulma: 4, maas: 3, uzaktan: 3, girisimcilik: 4, yz: 5 },
+            analystNote: "\"Empati ekonomisinin\" en sağlam kalelerindendir. Finansal potansiyel, kendi pratiğini kuran bir girişimcide yatmaktadır. Mevcut İslami ilimler altyapısıyla birleştiğinde, muhafazakar topluluklara yönelik aile danışmanlığı gibi niş ve değerli hizmet alanları yaratma potansiyeli sunar.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Aile, Adalet, Sağlık Bakanlıkları, belediyeler, STK'lar, rehabilitasyon merkezleri gibi çok geniş bir yelpazede istihdam edilirler. Nitelikli uzman ihtiyacı süreklidir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025'te ortalama maaş 33.200 TL olarak öngörülmektedir. Deneyime göre 50.100 TL'ye kadar çıkabilir. Kendi danışmanlık merkezini açanlar için gelir potansiyeli daha yüksektir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Mesleğin özü saha çalışması ve yüz yüze danışmanlığa dayansa da, online terapi seansları ve raporlama gibi görevler uzaktan yürütülebilir. Hibrit modeller yaygınlaşmaktadır.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Girişimcilik potansiyeli en yüksek sosyal alanlardan biridir. Aile Danışmanlığı gibi ek eğitimlerle kendi özel danışmanlık merkezinizi açabilirsiniz. Ancak kamuda çalışanlar için yasal kısıtlamalar bulunmaktadır.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Çok Yüksek. Empati, aktif dinleme, karmaşık insan ilişkilerini anlama ve kriz anında insani müdahale gibi YZ'nin en zayıf olduğu yetkinlikler üzerine kuruludur.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>"Empati ekonomisinin" en sağlam kalelerindendir. Finansal potansiyel, kendi pratiğini kuran bir girişimcide yatmaktadır. Mevcut İslami ilimler altyapısıyla birleştiğinde, muhafazakar topluluklara yönelik aile danışmanlığı gibi niş ve değerli hizmet alanları yaratma potansiyeli sunar.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Aile, Adalet, Sağlık Bakanlıkları, belediyeler, STK'lar, rehabilitasyon merkezleri gibi çok geniş bir yelpazede istihdam edilirler. Nitelikli uzman ihtiyacı süreklidir.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025'te ortalama maaş 33.200 TL olarak öngörülmektedir. Deneyime göre 50.100 TL'ye kadar çıkabilir. Kendi danışmanlık merkezini açanlar için gelir potansiyeli daha yüksektir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Mesleğin özü saha çalışması ve yüz yüze danışmanlığa dayansa da, online terapi seansları ve raporlama gibi görevler uzaktan yürütülebilir. Hibrit modeller yaygınlaşmaktadır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Girişimcilik potansiyeli en yüksek sosyal alanlardan biridir. Aile Danışmanlığı gibi ek eğitimlerle kendi özel danışmanlık merkezinizi açabilirsiniz. Ancak kamuda çalışanlar için yasal kısıtlamalar bulunmaktadır.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Çok Yüksek. Empati, aktif dinleme, karmaşık insan ilişkilerini anlama ve kriz anında insani müdahale gibi YZ'nin en zayıf olduğu yetkinlikler üzerine kuruludur.</p>
             `
         },
         {
@@ -771,21 +749,13 @@ const departments = {
                 { icon: 'fa-tractor', text: 'Girişimcilik ve Devlet Teşvikleri' }
             ],
             ratings: { isBulma: 4, maas: 4, uzaktan: 3, girisimcilik: 4, yz: 4 },
+            analystNote: "Listedeki en yüksek \"gizli potansiyele\" sahip alanlardan biridir. Başarı, bu bölümü bir \"teknoloji, veri bilimi ve finans\" bölümü olarak görmeye bağlıdır. Python ile veri analizi, makine öğrenmesi ve GIS gibi ek yetkinlikler kazanan bir öğrenci, geleceğin en çok aranan profesyonellerinden biri olabilir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Tarım Bakanlığı, bankalar, kooperatifler, özel gıda şirketleri ve özellikle tarım teknolojisi (agri-tech) girişimlerinde iş bulabilirler. Tarım 4.0 ve 5.0 süreçleri teknoloji okuryazarı ekonomistlere talebi artırmaktadır.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Geniş bir aralığa sahiptir. Geleneksel danışmanlıkta maaşlar daha mütevazı iken, teknoloji firmalarında "tarım ekonomisti" unvanıyla çalışan uzmanların maaşları 91.000 TL gibi yüksek seviyelere ulaşabilmektedir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Saha çalışmaları olsa da, pazar analizi, fiyat modellemesi, risk yönetimi ve uydu/drone verilerinin analizi gibi görevler tamamen uzaktan yürütülebilir.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Kendi modern tarım işletmesini kurma, bağımsız danışmanlık hizmeti sunma veya tarım teknolojileri alanında bir startup kurma potansiyeli yüksektir. Devlet teşvikleri önemli bir avantajdır.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Yüksek (Adaptasyon Koşuluyla). YZ, tarımı kökten dönüştürmektedir. YZ araçlarını anlayıp yorumlayabilen ve bu teknik verileri somut ekonomik stratejilere dönüştürebilen "Tarım 5.0 Ekonomisti" için devasa bir fırsat alanı açmaktadır.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Listedeki en yüksek "gizli potansiyele" sahip alanlardan biridir. Başarı, bu bölümü bir "teknoloji, veri bilimi ve finans" bölümü olarak görmeye bağlıdır. Python ile veri analizi, makine öğrenmesi ve GIS gibi ek yetkinlikler kazanan bir öğrenci, geleceğin en çok aranan profesyonellerinden biri olabilir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Tarım Bakanlığı, bankalar, kooperatifler, özel gıda şirketleri ve özellikle tarım teknolojisi (agri-tech) girişimlerinde iş bulabilirler. Tarım 4.0 ve 5.0 süreçleri teknoloji okuryazarı ekonomistlere talebi artırmaktadır.</p>
+                <h4>Maaş Potansiyeli</h4><p>Geniş bir aralığa sahiptir. Geleneksel danışmanlıkta maaşlar daha mütevazı iken, teknoloji firmalarında \"tarım ekonomisti\" unvanıyla çalışan uzmanların maaşları 91.000 TL gibi yüksek seviyelere ulaşabilmektedir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Saha çalışmaları olsa da, pazar analizi, fiyat modellemesi, risk yönetimi ve uydu/drone verilerinin analizi gibi görevler tamamen uzaktan yürütülebilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Kendi modern tarım işletmesini kurma, bağımsız danışmanlık hizmeti sunma veya tarım teknolojileri alanında bir startup kurma potansiyeli yüksektir. Devlet teşvikleri önemli bir avantajdır.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Yüksek (Adaptasyon Koşuluyla). YZ, tarımı kökten dönüştürmektedir. YZ araçlarını anlayıp yorumlayabilen ve bu teknik verileri somut ekonomik stratejilere dönüştürebilen \"Tarım 5.0 Ekonomisti\" için devasa bir fırsat alanı açmaktadır.</p>
             `
         },
         {
@@ -798,21 +768,13 @@ const departments = {
                 { icon: 'fa-dollar-sign', text: 'Yüksek Maaş Potansiyeli' }
             ],
             ratings: { isBulma: 4, maas: 4, uzaktan: 2, girisimcilik: 3, yz: 4 },
+            analystNote: "Demografik trendler ve teknolojik gelişmelerin kesişiminde yer alan stratejik bir alandır. Başarı, sağlık teknolojileri (HealthTech), sağlık hukuku ve sigortacılık gibi alanlarda uzmanlaşmayla yakından ilgilidir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Kamu, üniversite ve özel hastaneler, ilaç şirketleri, tıbbi cihaz firmaları, sigorta şirketleri gibi geniş bir alanda yönetici adayı olarak çalışabilirler.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025 için ortalama maaş beklentisi 41.500 TL'dir. Deneyime göre 80.000 TL'yi aşabilir, 10+ yıl deneyimli yöneticiler için en yüksek maaşlar 150.000 TL'yi bulabilir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Operasyonel yönetim yerinde olmayı gerektirir. Ancak finansal planlama, bütçeleme, pazarlama gibi idari görevler hibrit modellere uygundur.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Özel poliklinik, evde bakım ajansı, sağlık danışmanlığı veya medikal turizm şirketi gibi niş alanlarda kendi işlerini kurabilirler.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Yüksek. Bir sağlık kurumunun yönetimi; karmaşık insan etkileşimleri, etik kararlar, kriz yönetimi ve stratejik vizyon gibi YZ tarafından otomatize edilmesi zor, insani yetkinlikler gerektirir.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Demografik trendler ve teknolojik gelişmelerin kesişiminde yer alan stratejik bir alandır. Başarı, sağlık teknolojileri (HealthTech), sağlık hukuku ve sigortacılık gibi alanlarda uzmanlaşmayla yakından ilgilidir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Kamu, üniversite ve özel hastaneler, ilaç şirketleri, tıbbi cihaz firmaları, sigorta şirketleri gibi geniş bir alanda yönetici adayı olarak çalışabilirler.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025 için ortalama maaş beklentisi 41.500 TL'dir. Deneyime göre 80.000 TL'yi aşabilir, 10+ yıl deneyimli yöneticiler için en yüksek maaşlar 150.000 TL'yi bulabilir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Operasyonel yönetim yerinde olmayı gerektirir. Ancak finansal planlama, bütçeleme, pazarlama gibi idari görevler hibrit modellere uygundur.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Özel poliklinik, evde bakım ajansı, sağlık danışmanlığı veya medikal turizm şirketi gibi niş alanlarda kendi işlerini kurabilirler.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Yüksek. Bir sağlık kurumunun yönetimi; karmaşık insan etkileşimleri, etik kararlar, kriz yönetimi ve stratejik vizyon gibi YZ tarafından otomatize edilmesi zor, insani yetkinlikler gerektirir.</p>
             `
         },
         {
@@ -825,21 +787,13 @@ const departments = {
                 { icon: 'fa-language', text: 'Yabancı Dil Bilgisi Kritik' }
             ],
             ratings: { isBulma: 4, maas: 4, uzaktan: 3, girisimcilik: 4, yz: 2 },
+            analystNote: "Dinamik ve küresel bir kariyer hedefleyenler için uygundur. Başarının anahtarı, en az bir yabancı dili akıcı öğrenmek, ERP yazılımları ve veri analizi araçları hakkında bilgi sahibi olmak ve belirli bir pazar üzerine uzmanlaşmaktır.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Türkiye'nin jeopolitik konumu sayesinde ithalat-ihracat firmaları, lojistik şirketleri, gümrük müşavirlikleri gibi alanlarda talep süreklidir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Yeni başlayan bir uzman ortalama 31.300 TL kazanırken, "Lojistik Yöneticisi" gibi pozisyonlarda maaşlar 70.000 TL'yi aşmaktadır. Yabancı dil bilgisi kritiktir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Operasyonel taraf fiziksel varlık gerektirse de, planlama, müşteri ilişkileri ve dokümantasyon takibi gibi görevler uzaktan yürütülebilir.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Kendi ithalat-ihracat danışmanlık firmasını, bir nakliye şirketini veya antrepo tesisini kurma potansiyeli yüksektir. E-ticaretin yükselişi yeni fırsatlar sunmaktadır.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Orta. Tedarik zinciri optimizasyonu, rota planlama gibi görevler YZ tarafından otomatize edilmektedir. Dayanıklılık, operasyonel bir çalışandan, YZ sistemlerini yönetebilen stratejik bir yöneticiye evrilme becerisine bağlıdır.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Dinamik ve küresel bir kariyer hedefleyenler için uygundur. Başarının anahtarı, en az bir yabancı dili akıcı öğrenmek, ERP yazılımları ve veri analizi araçları hakkında bilgi sahibi olmak ve belirli bir pazar üzerine uzmanlaşmaktır.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Türkiye'nin jeopolitik konumu sayesinde ithalat-ihracat firmaları, lojistik şirketleri, gümrük müşavirlikleri gibi alanlarda talep süreklidir.</p>
+                <h4>Maaş Potansiyeli</h4><p>Yeni başlayan bir uzman ortalama 31.300 TL kazanırken, \"Lojistik Yöneticisi\" gibi pozisyonlarda maaşlar 70.000 TL'yi aşmaktadır. Yabancı dil bilgisi kritiktir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Operasyonel taraf fiziksel varlık gerektirse de, planlama, müşteri ilişkileri ve dokümantasyon takibi gibi görevler uzaktan yürütülebilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Kendi ithalat-ihracat danışmanlık firmasını, bir nakliye şirketini veya antrepo tesisini kurma potansiyeli yüksektir. E-ticaretin yükselişi yeni fırsatlar sunmaktadır.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Orta. Tedarik zinciri optimizasyonu, rota planlama gibi görevler YZ tarafından otomatize edilmektedir. Dayanıklılık, operasyonel bir çalışandan, YZ sistemlerini yönetebilen stratejik bir yöneticiye evrilme becerisine bağlıdır.</p>
             `
         },
         {
@@ -852,21 +806,13 @@ const departments = {
                 { icon: 'fa-university', text: 'Kamu ve Akademi Ağırlıklı' }
             ],
             ratings: { isBulma: 3, maas: 2, uzaktan: 2, girisimcilik: 2, yz: 5 },
+            analystNote: "Manevi tatmin ve topluma hizmet odaklı bireyler için anlamlı bir yoldur. Başarı, temel eğitimi psikoloji, sosyoloji veya dijital medya gibi alanlarla harmanlayarak katma değerli alanlar yaratmaya bağlıdır. \"Dijital anıtçı ve arşivci\" gibi geleceğin meslekleri için potansiyel barındırır.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Mezunlar için Diyanet İşleri Başkanlığı, MEB (DKAB Öğretmeni), üniversiteler ve STK'lar gibi geniş bir alan mevcuttur. Ancak kamu atamaları KPSS puanına ve kontenjanlara bağlı olduğu için rekabet yüksektir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Maaşlar büyük ölçüde kamu standartlarına göre şekillenir. 2025 öngörülerine göre imam maaşları 26.700-27.000 TL, DKAB öğretmen maaşları 25.100-40.800 TL arasındadır. Finansal getirisi en yüksek mesleklerden değildir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Geleneksel roller (imamlık, öğretmenlik) yüz yüze etkileşim gerektirir. Ancak akademik araştırma, online içerik üreticiliği veya editörlük gibi rollerde esneklik mümkündür.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Geleneksel bir "şirket kurma" modeline uygun değildir. Ancak özel ders, online eğitim setleri, İslami finans danışmanlığı gibi bireysel girişimcilik potansiyeli mevcuttur.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Çok Yüksek. Temelini inanç, maneviyat, etik yorumlama ve rehberlik oluşturur. Bu yetkinlikler, yapay zekânın taklit edemeyeceği derin insani ve empatik becerilerdir. YZ, sadece bir araştırma asistanı olabilir.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Manevi tatmin ve topluma hizmet odaklı bireyler için anlamlı bir yoldur. Başarı, temel eğitimi psikoloji, sosyoloji veya dijital medya gibi alanlarla harmanlayarak katma değerli alanlar yaratmaya bağlıdır. "Dijital anıtçı ve arşivci" gibi geleceğin meslekleri için potansiyel barındırır.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Mezunlar için Diyanet İşleri Başkanlığı, MEB (DKAB Öğretmeni), üniversiteler ve STK'lar gibi geniş bir alan mevcuttur. Ancak kamu atamaları KPSS puanına ve kontenjanlara bağlı olduğu için rekabet yüksektir.</p>
+                <h4>Maaş Potansiyeli</h4><p>Maaşlar büyük ölçüde kamu standartlarına göre şekillenir. 2025 öngörülerine göre imam maaşları 26.700-27.000 TL, DKAB öğretmen maaşları 25.100-40.800 TL arasındadır. Finansal getirisi en yüksek mesleklerden değildir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Geleneksel roller (imamlık, öğretmenlik) yüz yüze etkileşim gerektirir. Ancak akademik araştırma, online içerik üreticiliği veya editörlük gibi rollerde esneklik mümkündür.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Geleneksel bir \"şirket kurma\" modeline uygun değildir. Ancak özel ders, online eğitim setleri, İslami finans danışmanlığı gibi bireysel girişimcilik potansiyeli mevcuttur.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Çok Yüksek. Temelini inanç, maneviyat, etik yorumlama ve rehberlik oluşturur. Bu yetkinlikler, yapay zekânın taklit edemeyeceği derin insani ve empatik becerilerdir. YZ, sadece bir araştırma asistanı olabilir.</p>
             `
         },
         {
@@ -879,21 +825,13 @@ const departments = {
                 { icon: 'fa-cogs', text: 'Dijital Yetkinliklerle Değerlenir' }
             ],
             ratings: { isBulma: 2, maas: 2, uzaktan: 4, girisimcilik: 3, yz: 2 },
+            analystNote: "Başarı, diplomanın ötesinde geliştirilecek ek yetkinliklere bağlıdır. Dijital pazarlama, SEO, sosyal medya yönetimi gibi alanlarda kendini geliştiren bir mezun, özel sektörde aranan bir profesyonel haline gelebilir. Üniversite yıllarında bir blog yazmak ve portfolyo oluşturmak önemlidir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>En geleneksel kariyer yolu, formasyon alarak öğretmen olmaktır, ancak atamalar rekabetçidir. Alternatif olarak, yayınevlerinde editörlük, reklam ajanslarında metin yazarlığı, medya kuruluşlarında içerik üreticiliği gibi imkanlar mevcuttur.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025 yılı için Türk Dili ve Edebiyatı Öğretmeni'nin ortalama maaşı 26.400 TL'dir. Özel sektör pozisyonlarında maaşlar daha değişkendir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Yüksek. Editörlük, metin yazarlığı, çevirmenlik gibi kariyer yolları uzaktan ve freelance çalışmaya son derece uygundur.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Orta. Freelance metin yazarlığı, editörlük hizmetleri sunarak kendi işini yürütebilir veya bir içerik ajansı kurabilir.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Orta. YZ, basit metinleri üretebilir, bu da temel seviye metin yazarlarını tehdit edebilir. Ancak bir markanın ses tonunu oluşturmak, yaratıcı ve duygusal bağ kuran bir hikaye anlatmak gibi görevler insani yaratıcılık gerektirir.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Başarı, diplomanın ötesinde geliştirilecek ek yetkinliklere bağlıdır. Dijital pazarlama, SEO, sosyal medya yönetimi gibi alanlarda kendini geliştiren bir mezun, özel sektörde aranan bir profesyonel haline gelebilir. Üniversite yıllarında bir blog yazmak ve portfolyo oluşturmak önemlidir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>En geleneksel kariyer yolu, formasyon alarak öğretmen olmaktır, ancak atamalar rekabetçidir. Alternatif olarak, yayınevlerinde editörlük, reklam ajanslarında metin yazarlığı, medya kuruluşlarında içerik üreticiliği gibi imkanlar mevcuttur.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025 yılı için Türk Dili ve Edebiyatı Öğretmeni'nin ortalama maaşı 26.400 TL'dir. Özel sektör pozisyonlarında maaşlar daha değişkendir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Yüksek. Editörlük, metin yazarlığı, çevirmenlik gibi kariyer yolları uzaktan ve freelance çalışmaya son derece uygundur.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Orta. Freelance metin yazarlığı, editörlük hizmetleri sunarak kendi işini yürütebilir veya bir içerik ajansı kurabilir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Orta. YZ, basit metinleri üretebilir, bu da temel seviye metin yazarlarını tehdit edebilir. Ancak bir markanın ses tonunu oluşturmak, yaratıcı ve duygusal bağ kuran bir hikaye anlatmak gibi görevler insani yaratıcılık gerektirir.</p>
             `
         },
         {
@@ -906,21 +844,13 @@ const departments = {
                 { icon: 'fa-search', text: 'Tutku ve Merak Gerektirir' }
             ],
             ratings: { isBulma: 2, maas: 2, uzaktan: 3, girisimcilik: 2, yz: 4 },
+            analystNote: "Entelektüel merakı yüksek bireyler için zengin bir alandır. Osmanlıca gibi bir alan dilini öğrenmek, dijital beşeri bilimler ve arşivcilik teknolojileri üzerine kendini geliştirmek ve belirli bir dönem üzerine uzmanlaşmak, kariyer kapılarını açacaktır.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Ana kariyer yolu formasyon alarak Tarih öğretmeni olmaktır ve bu yol oldukça rekabetçidir. Diğer kamu seçenekleri arasında Devlet Arşivleri, Türk Tarih Kurumu ve müzeler bulunur ki bu kadrolar da sınırlıdır.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025 yılı için Tarih Öğretmeni ortalama maaşı 35.000 TL olarak öngörülmektedir. Özel sektördeki maaşlar ise tamamen yapılan işin niteliğine bağlıdır.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Orta. Akademik araştırma, yazarlık, editörlük ve online danışmanlık gibi görevler uzaktan yürütülebilir.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Düşük. Ancak popüler tarih alanında içerik üreten bir YouTube kanalı kurmak veya tarihi dizi/film projelerine danışmanlık yapmak gibi bireysel girişimcilik yolları mevcuttur.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Yüksek. YZ, milyonlarca sayfa arşivi tarayabilir, ancak bu verilerden bir anlam çıkarmak, neden-sonuç ilişkileri kurmak ve tarihi olayları yorumlamak tamamen tarihçinin analitik ve eleştirel düşünme becerilerine bağlıdır.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Entelektüel merakı yüksek bireyler için zengin bir alandır. Osmanlıca gibi bir alan dilini öğrenmek, dijital beşeri bilimler ve arşivcilik teknolojileri üzerine kendini geliştirmek ve belirli bir dönem üzerine uzmanlaşmak, kariyer kapılarını açacaktır.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Ana kariyer yolu formasyon alarak Tarih öğretmeni olmaktır ve bu yol oldukça rekabetçidir. Diğer kamu seçenekleri arasında Devlet Arşivleri, Türk Tarih Kurumu ve müzeler bulunur ki bu kadrolar da sınırlıdır.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025 yılı için Tarih Öğretmeni ortalama maaşı 35.000 TL olarak öngörülmektedir. Özel sektördeki maaşlar ise tamamen yapılan işin niteliğine bağlıdır.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Orta. Akademik araştırma, yazarlık, editörlük ve online danışmanlık gibi görevler uzaktan yürütülebilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Düşük. Ancak popüler tarih alanında içerik üreten bir YouTube kanalı kurmak veya tarihi dizi/film projelerine danışmanlık yapmak gibi bireysel girişimcilik yolları mevcuttur.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Yüksek. YZ, milyonlarca sayfa arşivi tarayabilir, ancak bu verilerden bir anlam çıkarmak, neden-sonuç ilişkileri kurmak ve tarihi olayları yorumlamak tamamen tarihçinin analitik ve eleştirel düşünme becerilerine bağlıdır.</p>
             `
         },
         {
@@ -933,21 +863,13 @@ const departments = {
                 { icon: 'fa-microchip', text: 'Teknoloji ile Güçlenen Bilim Dalı' }
             ],
             ratings: { isBulma: 2, maas: 3, uzaktan: 2, girisimcilik: 1, yz: 4 },
+            analystNote: "Tutku ve adanmışlık gerektiren bir bilim dalıdır. Başarılı olmak için akademik kariyeri hedeflemek, yüksek lisans/doktora yapmak, antik dil öğrenmek ve GIS ile YZ tabanlı analiz araçları gibi teknolojik yetkinlikler kazanmak kritik öneme sahiptir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Ana istihdam alanları Kültür ve Turizm Bakanlığı'na bağlı müzeler, kazı başkanlıkları ve üniversitelerdir. Bu pozisyonların sayısı oldukça sınırlıdır ve atamalar KPSS veya akademik sınavlara bağlıdır.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025'te bir arkeoloğun ortalama maaşı 54.400 TL'dir. Deneyimli uzmanlar için 86.000 TL'ye kadar çıkabilmektedir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Mesleğin temelini kazı ve saha çalışmaları oluşturur. Ancak araştırma, makale yazımı ve dijital arşivleme gibi işler ofis/ev ortamında yapılabilir.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Çok Düşük. Bireysel bir girişimcilik modeli bu alan için geçerli değildir.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Yüksek. YZ, uydu görüntülerini analiz ederek potentsiyel kazı alanlarını tespit edebilir veya eserleri sınıflandırabilir. Ancak bulguları yorumlamak, tarihi bağlamı kurmak ve yeni teoriler üretmek tamamen arkeoloğun entelektüel birikimine bağlıdır. YZ, güçlü bir kazmadır; beyin ise arkeologdur.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>Tutku ve adanmışlık gerektiren bir bilim dalıdır. Başarılı olmak için akademik kariyeri hedeflemek, yüksek lisans/doktora yapmak, antik dil öğrenmek ve GIS ile YZ tabanlı analiz araçları gibi teknolojik yetkinlikler kazanmak kritik öneme sahiptir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Ana istihdam alanları Kültür ve Turizm Bakanlığı'na bağlı müzeler, kazı başkanlıkları ve üniversitelerdir. Bu pozisyonların sayısı oldukça sınırlıdır ve atamalar KPSS veya akademik sınavlara bağlıdır.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025'te bir arkeoloğun ortalama maaşı 54.400 TL'dir. Deneyimli uzmanlar için 86.000 TL'ye kadar çıkabilmektedir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Mesleğin temelini kazı ve saha çalışmaları oluşturur. Ancak araştırma, makale yazımı ve dijital arşivleme gibi işler ofis/ev ortamında yapılabilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Çok Düşük. Bireysel bir girişimcilik modeli bu alan için geçerli değildir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Yüksek. YZ, uydu görüntülerini analiz ederek potansiyel kazı alanlarını tespit edebilir veya eserleri sınıflandırabilir. Ancak bulguları yorumlamak, tarihi bağlamı kurmak ve yeni teoriler üretmek tamamen arkeoloğun entelektüel birikimine bağlıdır. YZ, güçlü bir kazmadır; beyin ise arkeologdur.</p>
             `
         },
         {
@@ -960,21 +882,13 @@ const departments = {
                 { icon: 'fa-balance-scale', text: 'Politika ve Yönetim Bilimi' }
             ],
             ratings: { isBulma: 2, maas: 3, uzaktan: 2, girisimcilik: 1, yz: 3 },
+            analystNote: "İdealist ve kamu hizmeti motivasyonu yüksek bireyler için anlamlıdır. Ancak istihdam piyasasının gerçekleri göz ardı edilmemelidir. KPSS A'ya ilk yıldan hazırlanmak bir zorunluluktur. Alternatif olarak, uluslararası ilişkiler, çevre politikaları gibi spesifik bir alanda uzmanlaşmak ve bunu yüksek lisansla desteklemek, özel sektör için daha rekabetçi bir profil oluşturur.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Birincil hedef, KPSS A grubu sınavları ile girilebilen müfettişlik, denetçilik gibi kamu kadrolarıdır. Ancak bu kadrolar için kontenjanlar son derece sınırlıdır ve rekabet çok yüksektir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Kamu sektöründe maaşlar orta düzeydedir. Ancak özel sektör veya uluslararası kuruluşlarda (BM, Dünya Bankası) maaşlar 70.000 TL gibi daha yüksek seviyelere çıkabilmektedir.</p>
-                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
-                <p>Kamu kurumlarındaki çalışma kültürü genellikle ofiste bulunmayı gerektirir. Uzaktan çalışma imkanları sınırlıdır.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Çok Düşük. Bölümün doğası, girişim kurmaktan ziyade mevcut kurumsal yapılar içinde çalışmaya yöneliktir.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Orta-Yüksek. Politika geliştirme, yasa taslağı hazırlama, stratejik planlama gibi görevler; etik muhakeme ve müzakere becerisi gibi insani beceriler gerektirir.</p>
-                <div class="analyst-note">
-                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
-                    <p>İdealist ve kamu hizmeti motivasyonu yüksek bireyler için anlamlıdır. Ancak istihdam piyasasının gerçekleri göz ardı edilmemelidir. KPSS A'ya ilk yıldan hazırlanmak bir zorunluluktur. Alternatif olarak, uluslararası ilişkiler, çevre politikaları gibi spesifik bir alanda uzmanlaşmak ve bunu yüksek lisansla desteklemek, özel sektör için daha rekabetçi bir profil oluşturur.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Birincil hedef, KPSS A grubu sınavları ile girilebilen müfettişlik, denetçilik gibi kamu kadrolarıdır. Ancak bu kadrolar için kontenjanlar son derece sınırlıdır ve rekabet çok yüksektir.</p>
+                <h4>Maaş Potansiyeli</h4><p>Kamu sektöründe maaşlar orta düzeydedir. Ancak özel sektör veya uluslararası kuruluşlarda (BM, Dünya Bankası) maaşlar 70.000 TL gibi daha yüksek seviyelere çıkabilmektedir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4><p>Kamu kurumlarındaki çalışma kültürü genellikle ofiste bulunmayı gerektirir. Uzaktan çalışma imkanları sınırlıdır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Çok Düşük. Bölümün doğası, girişim kurmaktan ziyade mevcut kurumsal yapılar içinde çalışmaya yöneliktir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Orta-Yüksek. Politika geliştirme, yasa taslağı hazırlama, stratejik planlama gibi görevler; etik muhakeme ve müzakere becerisi gibi insani beceriler gerektirir.</p>
             `
         },
     ],
@@ -989,19 +903,12 @@ const departments = {
                 { icon: 'fa-graduation-cap', text: 'DGS ile Lisansa Geçiş Köprüsü' }
             ],
             ratings: { isBulma: 4, maas: 3, uzaktan: 5, girisimcilik: 4, yz: 3, dgs: 5 },
+            analystNote: "Çok Yüksek. Bu bölüm, DGS ile Görsel İletişim Tasarımı, Grafik Tasarım, Çizgi Film ve Animasyon gibi çok değerli lisans programlarına geçiş için bir köprü olarak görülmelidir. 2 yıllık eğitimde teknik beceriler ve güçlü bir portfolyo oluşturup, DGS ile akademik altyapıyı tamamlamak en ideal kariyer yoludur.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Reklam ajansları, animasyon stüdyoları, oyun şirketleri, TV kanalları ve mimarlık ofislerinde animatör, 3D modelleme uzmanı olarak iş bulabilirler. Portfolyo, diplomadan daha önemlidir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Önlisans seviyesinde 2025 için ortalama maaş 33.200 TL'dir. Ancak potansiyel, yeteneğe ve DGS ile lisans tamamlama durumuna bağlıdır. Benzer alandaki "Oyun Geliştirici" maaşları ortalama 62.700 TL'dir.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Yüksek. Mezunlar, freelance olarak çalışabilir veya kendi animasyon/tasarım stüdyolarını kurabilirler.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Orta. YZ, basit animasyon döngüleri veya 3D modeller oluşturabilir. Ancak özgün bir karakter tasarlamak ve bir hikayeyi animasyonla anlatmak insani yaratıcılık gerektirir. YZ, bir rakip değil, bir araçtır.</p>
-                <div class="analyst-note">
-                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
-                    <p>Çok Yüksek. Bu bölüm, DGS ile Görsel İletişim Tasarımı, Grafik Tasarım, Çizgi Film ve Animasyon gibi çok değerli lisans programlarına geçiş için bir köprü olarak görülmelidir. 2 yıllık eğitimde teknik beceriler ve güçlü bir portfolyo oluşturup, DGS ile akademik altyapıyı tamamlamak en ideal kariyer yoludur.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Reklam ajansları, animasyon stüdyoları, oyun şirketleri, TV kanalları ve mimarlık ofislerinde animatör, 3D modelleme uzmanı olarak iş bulabilirler. Portfolyo, diplomadan daha önemlidir.</p>
+                <h4>Maaş Potansiyeli</h4><p>Önlisans seviyesinde 2025 için ortalama maaş 33.200 TL'dir. Ancak potansiyel, yeteneğe ve DGS ile lisans tamamlama durumuna bağlıdır. Benzer alandaki \"Oyun Geliştirici\" maaşları ortalama 62.700 TL'dir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Yüksek. Mezunlar, freelance olarak çalışabilir veya kendi animasyon/tasarım stüdyolarını kurabilirler.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Orta. YZ, basit animasyon döngüleri veya 3D modeller oluşturabilir. Ancak özgün bir karakter tasarlamak ve bir hikayeyi animasyonla anlatmak insani yaratıcılık gerektirir. YZ, bir rakip değil, bir araçtır.</p>
             `
         },
         {
@@ -1014,19 +921,12 @@ const departments = {
                 { icon: 'fa-layer-group', text: 'DGS ile 4 Yıllığa Tamamlama' }
             ],
             ratings: { isBulma: 3, maas: 3, uzaktan: 4, girisimcilik: 5, yz: 4, dgs: 5 },
+            analystNote: "Çok Yüksek. Bu bölüm, 4 yıllık Tekstil ve Moda Tasarımı bölümüne geçiş için en doğal ve avantajlı yollardan biridir. 2 yıllık eğitimde pratik becerileri kazanıp, 4 yıllık eğitimde vizyon ve teorik altyapıyı güçlendirmek en doğru stratejidir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>İş bulma adayın portfolyosuna ve yaratıcılığına bağlıdır. Mezunlar, hazır giyim markalarında "moda tasarım teknikeri" olarak çalışabilirler.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025 yılı için ortalama tekniker maaşı 33.400 TL'dir. Bu rakam, 4 yıllık mezun bir tasarımcının (ortalama 55.200 TL) maaşından düşüktür, bu da DGS'nin önemini gösterir.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Çok Yüksek. Kendi markasını veya atölyesini kurma potansiyeli bu bölüm için de geçerlidir.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Yüksek. Yaratıcılık ve estetik anlayış, YZ'ye karşı en büyük korumadır.</p>
-                <div class="analyst-note">
-                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
-                    <p>Çok Yüksek. Bu bölüm, 4 yıllık Tekstil ve Moda Tasarımı bölümüne geçiş için en doğal ve avantajlı yollardan biridir. 2 yıllık eğitimde pratik becerileri kazanıp, 4 yıllık eğitimde vizyon ve teorik altyapıyı güçlendirmek en doğru stratejidir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>İş bulma adayın portfolyosuna ve yaratıcılığına bağlıdır. Mezunlar, hazır giyim markalarında \"moda tasarım teknikeri\" olarak çalışabilirler.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025 yılı için ortalama tekniker maaşı 33.400 TL'dir. Bu rakam, 4 yıllık mezun bir tasarımcının (ortalama 55.200 TL) maaşından düşüktür, bu da DGS'nin önemini gösterir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Çok Yüksek. Kendi markasını veya atölyesini kurma potansiyeli bu bölüm için de geçerlidir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Yüksek. Yaratıcılık ve estetik anlayış, YZ'ye karşı en büyük korumadır.</p>
             `
         },
         {
@@ -1039,19 +939,12 @@ const departments = {
                 { icon: 'fa-heart', text: 'Empati ve Sevgi Gerektiren Meslek' }
             ],
             ratings: { isBulma: 4, maas: 2, uzaktan: 1, girisimcilik: 4, yz: 5, dgs: 5 },
+            analystNote: "Çok Yüksek. Bu bölüm, DGS ile 4 yıllık Çocuk Gelişimi, Okul Öncesi Öğretmenliği ve Sosyal Hizmet gibi bölümlere geçiş için en avantajlı programlardan biridir. 2 yıllık eğitimi, 4 yıllık bir kariyere giden sağlam bir basamak olarak görmek en doğru stratejidir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Kreşler, anaokulları, özel eğitim merkezleri gibi alanlarda "çocuk gelişimi elemanı" olarak kolaylıkla iş bulabilirler. Talep süreklidir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Önlisans mezunları için maaşlar genellikle asgari ücretin biraz üzerindedir. Kamu veya büyük özel okullarda yeni mezun bir uzman 35.000-40.000 TL arası maaş alabilir. Potansiyeli artıran asıl faktör DGS ile lisans tamamlamaktır.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Yüksek. Gerekli yasal şartları sağlayan herkes kendi kreşini veya gündüz bakımevini açabilir. 2 yıllık mezunlar, kendi açtıkları kreşte "grup sorumlusu" (öğretmen) olarak da görev yapabilirler.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Çok Yüksek. Bir çocuğun duygusal ve sosyal gelişimini desteklemek, onlarla oyun oynamak, empati kurmak gibi görevler YZ'nin asla yapamayacağı, tamamen insani beceriler gerektirir.</p>
-                <div class="analyst-note">
-                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
-                    <p>Çok Yüksek. Bu bölüm, DGS ile 4 yıllık Çocuk Gelişimi, Okul Öncesi Öğretmenliği ve Sosyal Hizmet gibi bölümlere geçiş için en avantajlı programlardan biridir. 2 yıllık eğitimi, 4 yıllık bir kariyere giden sağlam bir basamak olarak görmek en doğru stratejidir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Kreşler, anaokulları, özel eğitim merkezleri gibi alanlarda \"çocuk gelişimi elemanı\" olarak kolaylıkla iş bulabilirler. Talep süreklidir.</p>
+                <h4>Maaş Potansiyeli</h4><p>Önlisans mezunları için maaşlar genellikle asgari ücretin biraz üzerindedir. Kamu veya büyük özel okullarda yeni mezun bir uzman 35.000-40.000 TL arası maaş alabilir. Potansiyeli artıran asıl faktör DGS ile lisans tamamlamaktır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Yüksek. Gerekli yasal şartları sağlayan herkes kendi kreşini veya gündüz bakımevini açabilir. 2 yıllık mezunlar, kendi açtıkları kreşte \"grup sorumlusu\" (öğretmen) olarak da görev yapabilirler.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Çok Yüksek. Bir çocuğun duygusal ve sosyal gelişimini desteklemek, onlarla oyun oynamak, empati kurmak gibi görevler YZ'nin asla yapamayacağı, tamamen insani beceriler gerektirir.</p>
             `
         },
         {
@@ -1064,19 +957,12 @@ const departments = {
                 { icon: 'fa-chart-pie', text: 'Yaşlanan Nüfus, Artan Talep' }
             ],
             ratings: { isBulma: 5, maas: 3, uzaktan: 1, girisimcilik: 3, yz: 5, dgs: 4 },
+            analystNote: "Yüksek. Mezunlar DGS ile Hemşirelik, Sosyal Hizmet ve Sağlık Yönetimi gibi 4 yıllık bölümlere geçiş yaparak kariyer potansiyellerini ve maaş beklentilerini önemli ölçüde artırabilirler.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Çok Yüksek. Türkiye'nin hızla yaşlanan nüfusu, bu alandaki nitelikli teknikerlere olan talebi patlatmıştır. Huzurevleri, yaşlı bakım merkezleri, evde bakım ajansları ve hastanelerde çok rahat iş bulabilirler.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>2025 için "Yaşlı Bakım Teknikeri" ortalama maaşı 34.800 TL'dir. Kamuda kadrolu çalışan bir teknikerin maaşı ek ödemelerle 50.000-55.000 TL seviyelerine çıkabilmektedir.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Orta. Özel bir yaşlı bakım merkezi kurmak mümkündür, ancak yüksek sermaye, karmaşık yasal prosedürler ve tıbbi altyapı gerektirir.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Çok Yüksek. Yaşlı bakımı, şefkat, sabır, empati ve insani dokunuş gerektiren bir hizmettir. YZ, bu hizmetin özünü oluşturan duygusal desteğin ve fiziksel bakımın yerini alamaz.</p>
-                <div class="analyst-note">
-                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
-                    <p>Yüksek. Mezunlar DGS ile Hemşirelik, Sosyal Hizmet ve Sağlık Yönetimi gibi 4 yıllık bölümlere geçiş yaparak kariyer potansiyellerini ve maaş beklentilerini önemli ölçüde artırabilirler.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Çok Yüksek. Türkiye'nin hızla yaşlanan nüfusu, bu alandaki nitelikli teknikerlere olan talebi patlatmıştır. Huzurevleri, yaşlı bakım merkezleri, evde bakım ajansları ve hastanelerde çok rahat iş bulabilirler.</p>
+                <h4>Maaş Potansiyeli</h4><p>2025 için \"Yaşlı Bakım Teknikeri\" ortalama maaşı 34.800 TL'dir. Kamuda kadrolu çalışan bir teknikerin maaşı ek ödemelerle 50.000-55.000 TL seviyelerine çıkabilmektedir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Orta. Özel bir yaşlı bakım merkezi kurmak mümkündür, ancak yüksek sermaye, karmaşık yasal prosedürler ve tıbbi altyapı gerektirir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Çok Yüksek. Yaşlı bakımı, şefkat, sabır, empati ve insani dokunuş gerektiren bir hizmettir. YZ, bu hizmetin özünü oluşturan duygusal desteğin ve fiziksel bakımın yerini alamaz.</p>
             `
         },
         {
@@ -1089,19 +975,12 @@ const departments = {
                 { icon: 'fa-angle-double-up', text: 'DGS ile Lisans Tamamlama Hedefi' }
             ],
             ratings: { isBulma: 3, maas: 3, uzaktan: 4, girisimcilik: 4, yz: 2, dgs: 5 },
+            analystNote: "Çok Yüksek. Bu bölüm, İletişim Fakültesi'nin birçok lisans programına geçiş için mükemmel bir temel oluşturur. Kariyer potansiyelini maksimize etmek için DGS ile lisans tamamlama hedeflenmelidir.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Rekabet yüksektir çünkü pozisyonlar için genellikle 4 yıllık İletişim Fakültesi mezunları tercih edilir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>"Halkla İlişkiler Sorumlusu" için ortalama maaş 36.000 TL, "Uzmanı" için 36.500 TL'dir. Müdür seviyesinde 46.100 TL'ye çıkmaktadır.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Yüksek. Deneyim kazanan mezunlar, freelance olarak sosyal medya yönetimi yapabilir veya kendi butik dijital iletişim ajanslarını kurabilirler.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Düşük-Orta. YZ, basit sosyal medya paylaşımları veya basın bültenleri yazabilir. Ancak kriz iletişimi, marka stratejisi gibi görevler stratejik akıl ve empati gerektirir.</p>
-                <div class="analyst-note">
-                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
-                    <p>Çok Yüksek. Bu bölüm, İletişim Fakültesi'nin birçok lisans programına geçiş için mükemmel bir temel oluşturur. Kariyer potansiyelini maksimize etmek için DGS ile lisans tamamlama hedeflenmelidir.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Rekabet yüksektir çünkü pozisyonlar için genellikle 4 yıllık İletişim Fakültesi mezunları tercih edilir.</p>
+                <h4>Maaş Potansiyeli</h4><p>\"Halkla İlişkiler Sorumlusu\" için ortalama maaş 36.000 TL, \"Uzmanı\" için 36.500 TL'dir. Müdür seviyesinde 46.100 TL'ye çıkmaktadır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Yüksek. Deneyim kazanan mezunlar, freelance olarak sosyal medya yönetimi yapabilir veya kendi butik dijital iletişim ajanslarını kurabilirler.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Düşük-Orta. YZ, basit sosyal medya paylaşımları veya basın bültenleri yazabilir. Ancak kriz iletişimi, marka stratejisi gibi görevler stratejik akıl ve empati gerektirir.</p>
             `
         },
         {
@@ -1114,19 +993,12 @@ const departments = {
                 { icon: 'fa-seedling', text: 'Butik Üretim ve Girişimcilik' }
             ],
             ratings: { isBulma: 4, maas: 3, uzaktan: 1, girisimcilik: 4, yz: 3, dgs: 4 },
+            analystNote: "Yüksek. Mezunlar, DGS ile Gıda Mühendisliği, Beslenme ve Diyetetik veya Kimya gibi bölümlere geçerek hem yetkinliklerini hem de maaş potansiyellerini önemli ölçüde artırabilirler.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Gıda sektörü, krizlerden en az etkilenen bir alandır. Mezunlar, gıda üreten her türlü fabrikanın üretim, kalite kontrol ve Ar-Ge laboratuvarlarında "gıda teknikeri" olarak çalışabilirler.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Maaşlar genellikle sanayi sektöründeki tekniker maaşları seviyesindedir ve deneyimle artar.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Yüksek. Gerekli izinleri alarak kendi butik gıda üretim tesislerini (organik ürünler, yöresel lezzetler vb.) kurabilirler.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Orta. Kalite kontrol, reçete optimizasyonu gibi süreçler YZ ile otomatize edilebilir. Ancak yeni ürün geliştirme (Ar-Ge) ve duyusal analiz teknikerin uzmanlığını gerektirir.</p>
-                <div class="analyst-note">
-                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
-                    <p>Yüksek. Mezunlar, DGS ile Gıda Mühendisliği, Beslenme ve Diyetetik veya Kimya gibi bölümlere geçerek hem yetkinliklerini hem de maaş potansiyellerini önemli ölçüde artırabilirler.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Gıda sektörü, krizlerden en az etkilenen bir alandır. Mezunlar, gıda üreten her türlü fabrikanın üretim, kalite kontrol ve Ar-Ge laboratuvarlarında \"gıda teknikeri\" olarak çalışabilirler.</p>
+                <h4>Maaş Potansiyeli</h4><p>Maaşlar genellikle sanayi sektöründeki tekniker maaşları seviyesindedir ve deneyimle artar.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Yüksek. Gerekli izinleri alarak kendi butik gıda üretim tesislerini (organik ürünler, yöresel lezzetler vb.) kurabilirler.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Orta. Kalite kontrol, reçete optimizasyonu gibi süreçler YZ ile otomatize edilebilir. Ancak yeni ürün geliştirme (Ar-Ge) ve duyusal analiz teknikerin uzmanlığını gerektirir.</p>
             `
         },
         {
@@ -1139,19 +1011,12 @@ const departments = {
                 { icon: 'fa-cogs', text: 'DGS ile Mühendisliğe Geçiş' }
             ],
             ratings: { isBulma: 4, maas: 3, uzaktan: 1, girisimcilik: 2, yz: 3, dgs: 4 },
+            analystNote: "Yüksek. Mezunlar, DGS ile Metalurji ve Malzeme Mühendisliği bölümüne geçiş yaparak hem mühendis unvanı alabilir hem de kariyer ve maaş potansiyellerini en üst düzeye çıkarabilirler.",
             details: `
-                <h4>İş Bulma Kolaylığı</h4>
-                <p>Demir-çelik, otomotiv, döküm gibi sanayinin temel sektörlerinde, üretim ve kalite kontrol laboratuvarlarında "metalurji teknikeri" olarak istihdam edilirler. Nitelikli ara eleman ihtiyacı süreklidir.</p>
-                <h4>Maaş Potansiyeli</h4>
-                <p>Maaşlar, sanayi sektöründeki diğer tekniker pozisyonlarıyla benzer seviyededir ve deneyimle artar.</p>
-                <h4>Kendi İşini Kurma Potansiyeli</h4>
-                <p>Düşük. Üretim tesisi kurmak devasa sermaye gerektirir. Ancak tecrübeli bir tekniker, test ve analiz hizmetleri sunan küçük bir laboratuvar kurabilir.</p>
-                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
-                <p>Orta. Üretim süreçlerinin optimizasyonu, kalite kontrol gibi alanlarda YZ ve otomasyon yoğun olarak kullanılmaktadır. Ancak YZ sistemlerini denetlemek ve beklenmedik hataları gidermek insan uzmanlığı gerektirir.</p>
-                <div class="analyst-note">
-                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
-                    <p>Yüksek. Mezunlar, DGS ile Metalurji ve Malzeme Mühendisliği bölümüne geçiş yaparak hem mühendis unvanı alabilir hem de kariyer ve maaş potansiyellerini en üst düzeye çıkarabilirler.</p>
-                </div>
+                <h4>İş Bulma Kolaylığı</h4><p>Demir-çelik, otomotiv, döküm gibi sanayinin temel sektörlerinde, üretim ve kalite kontrol laboratuvarlarında \"metalurji teknikeri\" olarak istihdam edilirler. Nitelikli ara eleman ihtiyacı süreklidir.</p>
+                <h4>Maaş Potansiyeli</h4><p>Maaşlar, sanayi sektöründeki diğer tekniker pozisyonlarıyla benzer seviyededir ve deneyimle artar.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4><p>Düşük. Üretim tesisi kurmak devasa sermaye gerektirir. Ancak tecrübeli bir tekniker, test ve analiz hizmetleri sunan küçük bir laboratuvar kurabilir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4><p>Orta. Üretim süreçlerinin optimizasyonu, kalite kontrol gibi alanlarda YZ ve otomasyon yoğun olarak kullanılmaktadır. Ancak YZ sistemlerini denetlemek ve beklenmedik hataları gidermek insan uzmanlığı gerektirir.</p>
             `
         }
     ]
@@ -1176,10 +1041,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function createDepartmentCard(dept) {
         const card = document.createElement('div');
         card.className = 'department-card';
-        
         let criteriaHtml = dept.criteria.map(c => `<li><i class="fas ${c.icon}"></i> ${c.text}</li>`).join('');
-
-        // DÜZELTME: 'includes' yerine tam eşleşme kontrolü yapıldı.
         const dataType = dept.degree.toLowerCase() === 'lisans' ? 'lisans' : 'onlisans';
 
         card.innerHTML = `
@@ -1201,9 +1063,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Opens the modal with department details
     function openModal(dept) {
-        modalBody.innerHTML = `<h2 class="modal-title">${dept.name}</h2>${dept.details}`;
+        const modalContentHtml = `
+            <h2 class="modal-title">${dept.name}</h2>
+            ${dept.details}
+            <div class="analyst-note">
+                <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                <p>${dept.analystNote}</p>
+            </div>
+        `;
+        modalBody.innerHTML = modalContentHtml;
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     }
 
     // Closes the modal
@@ -1234,7 +1104,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td class="rating-cell">${createRatingStars(dept.ratings.uzaktan)}</td>
                 <td class="rating-cell">${createRatingStars(dept.ratings.girisimcilik)}</td>
                 <td class="rating-cell">${createRatingStars(dept.ratings.yz)}</td>
-                ${dgsCell}
+                ${!isLisans ? dgsCell : ''}
+                <td class="analyst-note-cell">${dept.analystNote}</td>
             `;
             tableBody.appendChild(row);
         });
@@ -1256,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.addEventListener('click', function(e) {
         if (e.target.classList.contains('card-btn')) {
             const deptId = e.target.dataset.id;
-            const typeKey = e.target.dataset.type; // 'lisans' veya 'onlisans'
+            const typeKey = e.target.dataset.type;
             const departmentData = departments[typeKey].find(d => d.id === deptId);
             if (departmentData) {
                 openModal(departmentData);
@@ -1271,7 +1142,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Keyboard accessibility for modal
     window.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modal.style.display === 'block') {
             closeModal();
@@ -1286,12 +1156,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling and active link highlighting
     navLinksAnchors.forEach(link => {
         link.addEventListener('click', function(e) {
-            // Close mobile menu on click
             if (navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
             }
-            
-            // Set active class
             navLinksAnchors.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
