@@ -328,6 +328,7 @@
             background-color: var(--primary-color);
             color: #fff;
             font-weight: 600;
+            white-space: nowrap;
         }
         tbody tr:nth-child(even) {
             background-color: var(--background-color);
@@ -510,11 +511,11 @@
                         <thead>
                             <tr>
                                 <th>Bölüm Adı</th>
-                                <th class="rating-cell" title="İş Bulma Kolaylığı"><i class="fas fa-briefcase"></i></th>
-                                <th class="rating-cell" title="Maaş Potansiyeli"><i class="fas fa-coins"></i></th>
-                                <th class="rating-cell" title="Uzaktan Çalışma"><i class="fas fa-laptop-house"></i></th>
-                                <th class="rating-cell" title="Kendi İşini Kurma"><i class="fas fa-lightbulb"></i></th>
-                                <th class="rating-cell" title="YZ'ye Dayanıklılık"><i class="fas fa-robot"></i></th>
+                                <th>İş Bulma</th>
+                                <th>Maaş</th>
+                                <th>Uzaktan Çalışma</th>
+                                <th>Girişimcilik</th>
+                                <th>YZ Dayanıklılığı</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -528,12 +529,12 @@
                          <thead>
                             <tr>
                                 <th>Bölüm Adı</th>
-                                <th class="rating-cell" title="İş Bulma Kolaylığı"><i class="fas fa-briefcase"></i></th>
-                                <th class="rating-cell" title="Maaş Potansiyeli"><i class="fas fa-coins"></i></th>
-                                <th class="rating-cell" title="Uzaktan Çalışma"><i class="fas fa-laptop-house"></i></th>
-                                <th class="rating-cell" title="Kendi İşini Kurma"><i class="fas fa-lightbulb"></i></th>
-                                <th class="rating-cell" title="YZ'ye Dayanıklılık"><i class="fas fa-robot"></i></th>
-                                <th class="rating-cell" title="DGS Potansiyeli"><i class="fas fa-graduation-cap"></i></th>
+                                <th>İş Bulma</th>
+                                <th>Maaş</th>
+                                <th>Uzaktan Çalışma</th>
+                                <th>Girişimcilik</th>
+                                <th>YZ Dayanıklılığı</th>
+                                <th>DGS Potansiyeli</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1107,6 +1108,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let criteriaHtml = dept.criteria.map(c => `<li><i class="fas ${c.icon}"></i> ${c.text}</li>`).join('');
 
+        // DÜZELTME: 'includes' yerine tam eşleşme kontrolü yapıldı.
+        const dataType = dept.degree.toLowerCase() === 'lisans' ? 'lisans' : 'onlisans';
+
         card.innerHTML = `
             <div class="card-header">
                 <h3>${dept.name}</h3>
@@ -1118,7 +1122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </ul>
             </div>
             <div class="card-footer">
-                <button class="card-btn" data-id="${dept.id}" data-type="${dept.degree.toLowerCase().includes('lisans') ? 'lisans' : 'onlisans'}">Detayları Gör</button>
+                <button class="card-btn" data-id="${dept.id}" data-type="${dataType}">Detayları Gör</button>
             </div>
         `;
         return card;
@@ -1181,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.addEventListener('click', function(e) {
         if (e.target.classList.contains('card-btn')) {
             const deptId = e.target.dataset.id;
-            const typeKey = e.target.dataset.type;
+            const typeKey = e.target.dataset.type; // 'lisans' veya 'onlisans'
             const departmentData = departments[typeKey].find(d => d.id === deptId);
             if (departmentData) {
                 openModal(departmentData);
