@@ -1,203 +1,573 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spine 2D Değerlendirme Raporu - İnteraktif Analiz</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Kariyer Pusulası - İnteraktif Bölüm Seçim Rehberi</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Academic Blue -->
-    <!-- Application Structure Plan: The SPA is structured into logical, thematic sections to guide the user from the strategic "why" to the practical "how." It starts with a summary verdict, moves to "Why Spine 2D?" (covering its industry role and paradigm), then presents a "Tool Comparison" with interactive charts, a critical "License Analysis," and finally a "Project Outline." This non-linear, thematic structure is more digestible and persuasive than a simple document scroll, allowing users to focus on the areas most relevant to them, such as comparing tools or understanding project requirements. -->
-    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification. 1. Tool Comparison Table -> Goal: Compare alternatives -> Viz: Horizontal Bar Chart (Chart.js) -> Interaction: Tooltips -> Justification: Visually quantifies the report's qualitative analysis of which tool is "best" for this specific course, making the choice obvious. 2. License Features Table -> Goal: Emphasize Professional license necessity -> Viz: Doughnut Chart (Chart.js) -> Interaction: Tooltips -> Justification: Dramatically shows the feature gap between Essential & Pro licenses for the project, making the logistical requirement undeniable. 3. Professional Features List -> Goal: Explain complex features -> Viz: Interactive Accordion (HTML/JS) -> Interaction: Click to expand -> Justification: Breaks down dense technical information into manageable, user-triggered chunks, linking each feature directly to its project application. 4. Project Plan -> Goal: Outline the pedagogical steps -> Viz: Stepped Card Layout (HTML/CSS) -> Interaction: None -> Justification: Clearly visualizes the project's progression from start to finish. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #005A9C;
+            --secondary-color: #00A8E8;
+            --accent-color: #FFC107;
+            --background-color: #F8F9FA;
+            --text-color: #343A40;
+            --light-gray: #E9ECEF;
+            --dark-gray: #6C757D;
+            --success-color: #28A745;
+            --warning-color: #FFC107;
+            --danger-color: #DC3545;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #212529;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
-        .nav-link {
-            transition: color 0.3s, border-bottom-color 0.3s;
-            border-bottom: 2px solid transparent;
+
+       .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        .nav-link:hover, .nav-link.active {
-            color: #005f73;
-            border-bottom-color: #005f73;
+
+        /* --- Navigation --- */
+       .navbar {
+            background-color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
-        .card {
-            background-color: #ffffff;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+       .navbar.container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+       .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
         }
-        .chart-container {
+       .navbar-brand i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+       .nav-links {
+            list-style: none;
+            display: flex;
+        }
+       .nav-links li {
+            margin-left: 25px;
+        }
+       .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s ease;
             position: relative;
+            padding-bottom: 5px;
+        }
+       .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+       .nav-links a:hover,.nav-links a.active {
+            color: var(--primary-color);
+        }
+       .nav-links a:hover::after,.nav-links a.active::after {
             width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
+       .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
-        .accordion-content {
-            max-height: 0;
+
+        /* --- Hero Section --- */
+       .hero {
+            background: linear-gradient(rgba(0, 90, 156, 0.8), rgba(0, 168, 232, 0.7)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            color: #fff;
+            padding: 100px 0;
+            text-align: center;
+        }
+       .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+       .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+        }
+       .hero-btn {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+       .hero-btn:hover {
+            background-color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* --- Section Styles --- */
+       .section {
+            padding: 80px 0;
+        }
+       .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            font-weight: 700;
+            position: relative;
+        }
+       .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* --- Department Cards --- */
+       .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+       .department-card {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+       .department-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+       .card-header {
+            padding: 25px;
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+       .card-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+       .card-header.degree-type {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+       .card-body {
+            padding: 25px;
+            flex-grow: 1;
+        }
+       .criteria-list {
+            list-style: none;
+            padding: 0;
+        }
+       .criteria-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+       .criteria-list i {
+            color: var(--secondary-color);
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+       .card-footer {
+            padding: 20px 25px;
+            background-color: var(--background-color);
+            border-top: 1px solid var(--light-gray);
+        }
+       .card-btn {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+       .card-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* --- Modal for Department Details --- */
+       .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+       .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 40px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 900px;
+            border-radius: var(--border-radius);
+            position: relative;
+            animation: slide-down 0.5s ease-out;
+        }
+        @keyframes slide-down {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+       .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+       .close-btn:hover,.close-btn:focus {
+            color: black;
+        }
+       .modal-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+       .modal-body h4 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 10px;
+        }
+       .modal-body p {
+            margin-bottom: 15px;
+        }
+       .analyst-note {
+            background-color: #e7f5ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+       .analyst-note h5 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* --- Comparison Table --- */
+       .table-container {
+            overflow-x: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        th {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+        }
+        tbody tr:nth-child(even) {
+            background-color: var(--background-color);
+        }
+        tbody tr:hover {
+            background-color: #d4edff;
+        }
+       .rating-cell {
+            text-align: center;
+        }
+       .rating-star {
+            color: var(--accent-color);
+        }
+
+        /* --- Archetypes Section --- */
+       .archetype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+       .archetype-card {
+            background: #fff;
+            padding: 30px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+       .archetype-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+       .archetype-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+       .archetype-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+       .archetype-card p {
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+        }
+
+        /* --- AI Section --- */
+       .ai-section {
+            background-color: #fff;
+        }
+       .ai-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+       .ai-text {
+            flex: 1;
+        }
+       .ai-image {
+            flex: 1;
+            text-align: center;
+        }
+       .ai-image i {
+            font-size: 15rem;
+            color: var(--primary-color);
+            opacity: 0.8;
+        }
+
+        /* --- Footer --- */
+       .footer {
+            background-color: var(--text-color);
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+        }
+       .footer p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+           .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background-color: #fff;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+           .nav-links.active {
+                display: flex;
+            }
+           .nav-links li {
+                margin: 15px 0;
+                text-align: center;
+            }
+           .menu-toggle {
+                display: block;
+            }
+           .hero h1 {
+                font-size: 2.5rem;
+            }
+           .section-title {
+                font-size: 2rem;
+            }
+           .ai-content {
+                flex-direction: column;
+            }
+           .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+           .modal-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-[#003440]">Spine 2D Analizi</h1>
-            <div class="hidden md:flex space-x-8">
-                <a href="#verdict" class="nav-link pb-1">Nihai Karar</a>
-                <a href="#why-spine" class="nav-link pb-1">Neden Spine?</a>
-                <a href="#comparison" class="nav-link pb-1">Karşılaştırma</a>
-                <a href="#project" class="nav-link pb-1">Proje Taslağı</a>
-            </div>
-            <div class="md:hidden">
-                <button id="menu-btn" class="text-gray-700 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-            </div>
-        </nav>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#verdict" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Nihai Karar</a>
-            <a href="#why-spine" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Neden Spine?</a>
-            <a href="#comparison" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Karşılaştırma</a>
-            <a href="#project" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Proje Taslağı</a>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand"><i class="fas fa-compass"></i> Kariyer Pusulası</a>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links">
+                <li><a href="#lisans">Lisans (4 Yıllık)</a></li>
+                <li><a href="#onlisans">Önlisans (2 Yıllık)</a></li>
+                <li><a href="#karsilastirma">Karşılaştırma</a></li>
+                <li><a href="#arketipler">Kariyer Arketipleri</a></li>
+                <li><a href="#yapay-zeka">Yapay Zeka Etkisi</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Geleceğin Kariyer Kavşağında Stratejik Bölüm Seçimi</h1>
+            <p>İş bulma kolaylığı, maaş potansiyeli, uzaktan çalışma, girişimcilik ve yapay zekaya dayanıklılık gibi kritik faktörlere göre en doğru bölümü seçmen için hazırlanan interaktif rehber.</p>
+            <a href="#lisans" class="hero-btn">Keşfetmeye Başla <i class="fas fa-arrow-down"></i></a>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
-
-        <section id="verdict" class="text-center mb-24 scroll-mt-20">
-            <h2 class="text-4xl md:text-5xl font-bold text-[#003440] mb-4">Spine 2D: Dersiniz İçin Mükemmel Seçim</h2>
-            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
-                Detaylı analizler sonucunda, Dijital Oyun Tasarımı lisans programınızdaki "2D Tasarım ve Animasyon" dersi için Spine 2D'nin seçimi ve "atlı araba" projesi, pedagojik olarak sağlam ve endüstri standartlarıyla uyumlu, **olağanüstü bir karardır.** Bu uygulama, bu kararın arkasındaki temel nedenleri ve verileri interaktif olarak sunmaktadır.
-            </p>
-            <a href="#why-spine" class="bg-[#005f73] text-white font-bold py-3 px-8 rounded-full hover:bg-[#003440] transition-colors">Analizi Keşfedin ↓</a>
-        </section>
-
-        <section id="why-spine" class="mb-24 scroll-mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-[#003440] mb-2">Neden Spine 2D?</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Spine, sadece bir animasyon aracı değil, modern oyun geliştirmede verimlilik ve kaliteyi artıran bir üretim felsefesidir.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-4">📦</div>
-                    <h3 class="font-bold text-lg mb-2">Daha Küçük Dosya Boyutu</h3>
-                    <p class="text-sm text-gray-600">Sadece kemik verilerini saklayarak, geleneksel kare-kare animasyona göre çok daha az yer kaplar, mobil ve web platformları için idealdir.</p>
-                </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-4">🎨</div>
-                    <h3 class="font-bold text-lg mb-2">Daha Az Sanat Varlığı</h3>
-                    <p class="text-sm text-gray-600">Tek bir karakter setiyle sayısız animasyon oluşturulabilir. Bu, üretim süresini ve maliyetini dramatik şekilde düşürür.</p>
-                </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-4">✨</div>
-                    <h3 class="font-bold text-lg mb-2">Pürüzsüz Animasyon</h3>
-                    <p class="text-sm text-gray-600">Kareler arası enterpolasyon sayesinde, animasyonlar her zaman akıcıdır ve yavaş çekim gibi efektler kaliteden ödün vermeden uygulanabilir.</p>
-                </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-4">♻️</div>
-                    <h3 class="font-bold text-lg mb-2">Yeniden Kullanılabilirlik</h3>
-                    <p class="text-sm text-gray-600">Animasyonlar farklı karakterlere, kıyafet ve ekipmanlara (Skins) kolayca uygulanabilir, bu da modüler ve verimli bir iş akışı sağlar.</p>
-                </div>
+    <main>
+        <section id="lisans" class="section">
+            <div class="container">
+                <h2 class="section-title">Lisans Programları (4 Yıllık)</h2>
+                <div class="department-grid" id="lisans-grid">
+                    </div>
             </div>
         </section>
 
-        <section id="features" class="mb-24 scroll-mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-[#003440] mb-2">Projenin Kalbi: Profesyonel Özellikler</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">"Atlı araba" projesi, öğrencileri Spine'ın en güçlü özelliklerini kullanmaya teşvik eder. Her bir özellik, projenin farklı bir parçasını hayata geçirir.</p>
-            </div>
-            <div class="max-w-3xl mx-auto">
-                <div id="accordion-container"></div>
+        <section id="onlisans" class="section" style="background-color: #fff;">
+            <div class="container">
+                <h2 class="section-title">Önlisans Programları (2 Yıllık)</h2>
+                <div class="department-grid" id="onlisans-grid">
+                    </div>
             </div>
         </section>
 
-        <section id="comparison" class="mb-24 scroll-mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-[#003440] mb-2">Araç Karşılaştırması ve Lisans Analizi</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Doğru aracı seçmek, projenin başarısı için kritiktir. Veriler, Spine'ın neden öne çıktığını ve neden Professional lisansın zorunlu olduğunu gösteriyor.</p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-16">
-                <div class="card p-6 md:p-8">
-                    <h3 class="text-xl font-bold text-center mb-4 text-[#003440]">2D Oyun Animasyonu Dersi İçin Uygunluk</h3>
-                    <div class="chart-container">
-                        <canvas id="toolComparisonChart"></canvas>
-                    </div>
+        <section id="karsilastirma" class="section">
+            <div class="container">
+                <h2 class="section-title">Karşılaştırmalı Analiz</h2>
+                <div class="table-container">
+                    <h3>Lisans Programları Değerlendirme Matrisi</h3>
+                    <table id="lisans-table">
+                        <thead>
+                            <tr>
+                                <th>Bölüm Adı</th>
+                                <th class="rating-cell" title="İş Bulma Kolaylığı"><i class="fas fa-briefcase"></i></th>
+                                <th class="rating-cell" title="Maaş Potansiyeli"><i class="fas fa-coins"></i></th>
+                                <th class="rating-cell" title="Uzaktan Çalışma"><i class="fas fa-laptop-house"></i></th>
+                                <th class="rating-cell" title="Kendi İşini Kurma"><i class="fas fa-lightbulb"></i></th>
+                                <th class="rating-cell" title="YZ'ye Dayanıklılık"><i class="fas fa-robot"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
                 </div>
-                <div class="card p-6 md:p-8">
-                    <h3 class="text-xl font-bold text-center mb-4 text-[#003440]">Proje İçin Gerekli Özelliklerin Lisans Kapsamı</h3>
-                    <div class="chart-container">
-                        <canvas id="licenseComparisonChart"></canvas>
-                    </div>
+                <div class="table-container" style="margin-top: 40px;">
+                    <h3>Önlisans Programları Değerlendirme Matrisi</h3>
+                    <table id="onlisans-table">
+                         <thead>
+                            <tr>
+                                <th>Bölüm Adı</th>
+                                <th class="rating-cell" title="İş Bulma Kolaylığı"><i class="fas fa-briefcase"></i></th>
+                                <th class="rating-cell" title="Maaş Potansiyeli"><i class="fas fa-coins"></i></th>
+                                <th class="rating-cell" title="Uzaktan Çalışma"><i class="fas fa-laptop-house"></i></th>
+                                <th class="rating-cell" title="Kendi İşini Kurma"><i class="fas fa-lightbulb"></i></th>
+                                <th class="rating-cell" title="YZ'ye Dayanıklılık"><i class="fas fa-robot"></i></th>
+                                <th class="rating-cell" title="DGS Potansiyeli"><i class="fas fa-graduation-cap"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
                 </div>
-            </div>
-            <div class="mt-8 text-center text-sm text-gray-500">
-                <p><span class="font-bold text-red-600">Önemli Not:</span> "Atlı Araba" projesinin pedagojik hedeflerine ulaşmak için gereken temel özelliklerin tamamı yalnızca <span class="font-bold">Spine Professional</span> sürümünde mevcuttur. <span class="font-bold">Essential</span> sürümü bu ders için yetersizdir.</p>
             </div>
         </section>
 
-        <section id="project" class="scroll-mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-[#003440] mb-2">Atlı Araba Projesi: 3 Aşamalı Yol Haritası</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Bu proje, öğrencileri temelden ileri seviyeye taşıyan, yapılandırılmış bir öğrenme deneyimi sunar.</p>
+        <section id="arketipler" class="section" style="background-color: #fff;">
+            <div class="container">
+                <h2 class="section-title">Stratejik Kariyer Arketipleri</h2>
+                <div class="archetype-grid">
+                    <div class="archetype-card">
+                        <i class="fas fa-rocket archetype-icon"></i>
+                        <h3>Teknoloji Liderleri</h3>
+                        <p>Yüksek büyüme ve gelecek odaklı alanlar. Teknolojiyle iç içe, en yüksek maaş ve girişimcilik potansiyelini sunan, sürekli öğrenme gerektiren bölümler.</p>
+                    </div>
+                    <div class="archetype-card">
+                        <i class="fas fa-heart archetype-icon"></i>
+                        <h3>Empati Şampiyonları</h3>
+                        <p>İnsan odaklı ve YZ'ye dirençli alanlar. İstikrarlı istihdam ve yüksek manevi tatmin sunan, insani becerilere dayanan bölümler.</p>
+                    </div>
+                    <div class="archetype-card">
+                        <i class="fas fa-chess-knight archetype-icon"></i>
+                        <h3>Stratejistler</h3>
+                        <p>Dönüşüm ve uzmanlaşma gerektiren alanlar. Doğru uzmanlaşma ile değeri katlanarak artan, genel bilgiyi niş yetenekle birleştiren bölümler.</p>
+                    </div>
+                    <div class="archetype-card">
+                        <i class="fas fa-palette archetype-icon"></i>
+                        <h3>Yaratıcılar ve Bilgeler</h3>
+                        <p>Bireysel yetenek ve pazar dinamiklerine bağlı alanlar. Başarının diplomadan çok kişisel yeteneğe, portfolyoya ve ağ kurmaya bağlı olduğu bölümler.</p>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="relative max-w-4xl mx-auto">
-                <div class="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
-                <div class="space-y-16">
-                    <div class="relative flex items-center">
-                        <div class="w-1/2 pr-8 text-right">
-                            <div class="card p-6">
-                                <h3 class="text-xl font-bold text-[#005f73]">Aşama 1: Rigging</h3>
-                                <p class="mt-2 text-gray-600">Dijital kuklayı inşa etme. At (organik) ve araba (mekanik) için kemik hiyerarşileri oluşturulur. IK, Mesh ve Ağırlıklandırma gibi temel rigging teknikleri uygulanır.</p>
-                            </div>
-                        </div>
-                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#005f73] text-white flex items-center justify-center font-bold">1</div>
-                        <div class="w-1/2"></div>
+        <section id="yapay-zeka" class="section ai-section">
+            <div class="container">
+                <div class="ai-content">
+                    <div class="ai-text">
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 30px;">Yapay Zeka ve Kariyerin Geleceği</h2>
+                        <p>Otomasyon ve yapay zekâ, küresel ekonominin yaklaşık yarısını etkileme potansiyeli taşıyor. Bu bir "iş kaybı" paniğinden ziyade, "iş ve beceri dönüşümü" gerekliliğini ortaya koyuyor. Yapay zekâ, rutin ve veriye dayalı görevleri üstlenirken, insanlara özgü olan empati, yaratıcılık, stratejik düşünme ve karmaşık problem çözme gibi yetkinliklerin değerini artırıyor.</p>
+                        <p>Geleceğin başarılı kariyerleri, YZ'den kaçanlar değil, YZ'yi bir kaldıraç olarak kullanarak kendi alanlarında verimliliği, yaratıcılığı ve etkiyi artıran profesyoneller olacaktır. Bu rehber, bölümlerin YZ'ye karşı dayanıklılığını bu dinamik ve dönüşümcü bakış açısıyla ele almaktadır.</p>
                     </div>
-                    
-                    <div class="relative flex items-center">
-                        <div class="w-1/2"></div>
-                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#005f73] text-white flex items-center justify-center font-bold">2</div>
-                        <div class="w-1/2 pl-8 text-left">
-                           <div class="card p-6">
-                                <h3 class="text-xl font-bold text-[#005f73]">Aşama 2: Animasyon</h3>
-                                <p class="mt-2 text-gray-600">Bileşenlere hayat verme. Atın yürüyüş döngüsü, tekerleklerin sürekli dönüşü ve fenerin sallanması gibi ikincil hareketler için Fizik Kısıtlamaları kullanılır.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="relative flex items-center">
-                        <div class="w-1/2 pr-8 text-right">
-                            <div class="card p-6">
-                                <h3 class="text-xl font-bold text-[#005f73]">Aşama 3: Entegrasyon</h3>
-                                <p class="mt-2 text-gray-600">Parçaları birleştirme. At ve araba, Dönüşüm Kısıtlamaları kullanılarak birbirine bağlanır. Animasyonlar katmanlanarak dinamik bir bütün oluşturulur.</p>
-                            </div>
-                        </div>
-                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#005f73] text-white flex items-center justify-center font-bold">3</div>
-                        <div class="w-1/2"></div>
+                    <div class="ai-image">
+                        <i class="fas fa-brain"></i>
                     </div>
                 </div>
             </div>
@@ -205,174 +575,515 @@
 
     </main>
 
-    <footer class="bg-gray-800 text-white mt-24">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 Spine 2D Pedagojik Analiz Raporu. Bu interaktif uygulama, uzman değerlendirmesini özetlemektedir.</p>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Kariyer Pusulası. Tüm hakları saklıdır. Bu site, kariyer kararları için bir rehber olarak hazırlanmıştır.</p>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuBtn = document.getElementById('menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+    <div id="departmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modal-body-content" class="modal-body">
+                </div>
+        </div>
+    </div>
 
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            mobileMenu.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+<script>
+const departments = {
+    lisans:,
+            ratings: { isBulma: 3, maas: 2, uzaktan: 2, girisimcilik: 2, yz: 5 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Mezunlar için Diyanet İşleri Başkanlığı (imam, vaiz), MEB (DKAB Öğretmeni), üniversiteler ve STK'lar gibi geniş bir alan mevcuttur. Ancak kamu atamaları KPSS puanına ve kontenjanlara bağlı olduğu için rekabet yüksektir. [1, 2, 3]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Maaşlar büyük ölçüde kamu standartlarına göre şekillenir. 2025 öngörülerine göre imam maaşları 26.700-27.000 TL, DKAB öğretmen maaşları 25.100-40.800 TL arasındadır. [2] Finansal getirisi en yüksek mesleklerden değildir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Geleneksel roller (imamlık, öğretmenlik) yüz yüze etkileşim gerektirir. Ancak akademik araştırma, online içerik üreticiliği veya editörlük gibi rollerde esneklik mümkündür. [1]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Geleneksel bir "şirket kurma" modeline uygun değildir. Ancak özel ders, online eğitim setleri, İslami finans danışmanlığı gibi bireysel girişimcilik potansiyeli mevcuttur.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Çok Yüksek. Temelini inanç, maneviyat, etik yorumlama ve rehberlik oluşturur. Bu yetkinlikler, yapay zekânın taklit edemeyeceği derin insani ve empatik becerilerdir. [4, 5] YZ, sadece bir araştırma asistanı olabilir.</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Manevi tatmin ve topluma hizmet odaklı bireyler için anlamlı bir yoldur. En güçlü yönü YZ'ye dayanıklılığıdır. Başarı, temel eğitimi psikoloji, sosyoloji veya dijital medya gibi alanlarla harmanlayarak katma değerli alanlar yaratmaya bağlıdır. "Dijital anıtçı ve arşivci" gibi geleceğin meslekleri için potansiyel barındırır. [6]</p>
+                </div>
+            `
+        },
+        {
+            id: 'sosyal-hizmet',
+            name: 'Sosyal Hizmet',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 4, maas: 3, uzaktan: 3, girisimcilik: 4, yz: 5 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Aile, Adalet, Sağlık Bakanlıkları, belediyeler, STK'lar, rehabilitasyon merkezleri gibi çok geniş bir yelpazede istihdam edilirler. [7, 8] Nitelikli uzman ihtiyacı süreklidir.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025'te ortalama maaş 33.200 TL olarak öngörülmektedir. Deneyime göre 50.100 TL'ye kadar çıkabilir. [9] Kendi danışmanlık merkezini açanlar için gelir potansiyeli daha yüksektir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Mesleğin özü saha çalışması ve yüz yüze danışmanlığa dayansa da, online terapi seansları ve raporlama gibi görevler uzaktan yürütülebilir. Hibrit modeller yaygınlaşmaktadır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Girişimcilik potansiyeli en yüksek sosyal alanlardan biridir. Aile Danışmanlığı gibi ek eğitimlerle kendi özel danışmanlık merkezinizi açabilirsiniz. [8] Ancak kamuda çalışanlar için yasal kısıtlamalar bulunmaktadır. [10]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Çok Yüksek. Empati, aktif dinleme, karmaşık insan ilişkilerini anlama ve kriz anında insani müdahale gibi YZ'nin en zayıf olduğu yetkinlikler üzerine kuruludur. [4, 5]</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>"Empati ekonomisinin" en sağlam kalelerindendir. Finansal potansiyel, kendi pratiğini kuran bir girişimcide yatmaktadır. Mevcut İslami ilimler altyapısıyla birleştiğinde, muhafazakar topluluklara yönelik aile danışmanlığı gibi niş ve değerli hizmet alanları yaratma potansiyeli sunar.</p>
+                </div>
+            `
+        },
+        {
+            id: 'tarim-ekonomisi',
+            name: 'Tarım Ekonomisi',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 4, maas: 4, uzaktan: 3, girisimcilik: 4, yz: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Tarım Bakanlığı, bankalar, kooperatifler, özel gıda şirketleri ve özellikle tarım teknolojisi (agri-tech) girişimlerinde iş bulabilirler. [11] Tarım 4.0 ve 5.0 süreçleri teknoloji okuryazarı ekonomistlere talebi artırmaktadır. [12]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Geniş bir aralığa sahiptir. Geleneksel danışmanlıkta maaşlar daha mütevazı iken [11], teknoloji firmalarında "tarım ekonomisti" unvanıyla çalışan uzmanların maaşları 91.000 TL gibi yüksek seviyelere ulaşabilmektedir. [11]</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Saha çalışmaları olsa da, pazar analizi, fiyat modellemesi, risk yönetimi ve uydu/drone verilerinin analizi gibi görevler tamamen uzaktan yürütülebilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Kendi modern tarım işletmesini kurma, bağımsız danışmanlık hizmeti sunma veya tarım teknolojileri alanında bir startup kurma potansiyeli yüksektir. [13] Devlet teşvikleri önemli bir avantajdır.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Yüksek (Adaptasyon Koşuluyla). YZ, tarımı kökten dönüştürmektedir. [14, 15, 16] YZ araçlarını anlayıp yorumlayabilen ve bu teknik verileri somut ekonomik stratejilere dönüştürebilen "Tarım 5.0 Ekonomisti" için devasa bir fırsat alanı açmaktadır. [17, 12, 18]</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Listedeki en yüksek "gizli potansiyele" sahip alanlardan biridir. Başarı, bu bölümü bir "teknoloji, veri bilimi ve finans" bölümü olarak görmeye bağlıdır. Python ile veri analizi, makine öğrenmesi ve GIS gibi ek yetkinlikler kazanan bir öğrenci, geleceğin en çok aranan profesyonellerinden biri olabilir.</p>
+                </div>
+            `
+        },
+        {
+            id: 'saglik-yonetimi',
+            name: 'Sağlık Yönetimi',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 4, maas: 4, uzaktan: 2, girisimcilik: 3, yz: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Kamu, üniversite ve özel hastaneler, ilaç şirketleri, tıbbi cihaz firmaları, sigorta şirketleri gibi geniş bir alanda yönetici adayı olarak çalışabilirler. [19, 20]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025 için ortalama maaş beklentisi 41.500 TL'dir. Deneyime göre 80.000 TL'yi aşabilir, 10+ yıl deneyimli yöneticiler için en yüksek maaşlar 150.000 TL'yi bulabilir. [21]</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Operasyonel yönetim yerinde olmayı gerektirir. Ancak finansal planlama, bütçeleme, pazarlama gibi idari görevler hibrit modellere uygundur.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Özel poliklinik, evde bakım ajansı, sağlık danışmanlığı veya medikal turizm şirketi gibi niş alanlarda kendi işlerini kurabilirler. [22]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Yüksek. Bir sağlık kurumunun yönetimi; karmaşık insan etkileşimleri, etik kararlar, kriz yönetimi ve stratejik vizyon gibi YZ tarafından otomatize edilmesi zor, insani yetkinlikler gerektirir. [4]</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Demografik trendler ve teknolojik gelişmelerin kesişiminde yer alan stratejik bir alandır. Başarı, sağlık teknolojileri (HealthTech), sağlık hukuku ve sigortacılık gibi alanlarda uzmanlaşmayla yakından ilgilidir.</p>
+                </div>
+            `
+        },
+        {
+            id: 'uluslararasi-ticaret',
+            name: 'Uluslararası Ticaret ve Lojistik',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 4, maas: 4, uzaktan: 3, girisimcilik: 4, yz: 2 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Türkiye'nin jeopolitik konumu sayesinde ithalat-ihracat firmaları, lojistik şirketleri, gümrük müşavirlikleri gibi alanlarda talep süreklidir. [23]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Yeni başlayan bir uzman ortalama 31.300 TL kazanırken [24], "Lojistik Yöneticisi" gibi pozisyonlarda maaşlar 70.000 TL'yi aşmaktadır. [25] Yabancı dil bilgisi kritiktir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Operasyonel taraf fiziksel varlık gerektirse de, planlama, müşteri ilişkileri ve dokümantasyon takibi gibi görevler uzaktan yürütülebilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Kendi ithalat-ihracat danışmanlık firmasını, bir nakliye şirketini veya antrepo tesisini kurma potansiyeli yüksektir. [26] E-ticaretin yükselişi yeni fırsatlar sunmaktadır.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Orta. Tedarik zinciri optimizasyonu, rota planlama gibi görevler YZ tarafından otomatize edilmektedir. Dayanıklılık, operasyonel bir çalışandan, YZ sistemlerini yönetebilen stratejik bir yöneticiye evrilme becerisine bağlıdır.</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Dinamik ve küresel bir kariyer hedefleyenler için uygundur. Başarının anahtarı, en az bir yabancı dili akıcı öğrenmek, ERP yazılımları ve veri analizi araçları hakkında bilgi sahibi olmak ve belirli bir pazar üzerine uzmanlaşmaktır.</p>
+                </div>
+            `
+        },
+        {
+            id: 'tekstil-moda',
+            name: 'Tekstil ve Moda Tasarımı',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 3, maas: 4, uzaktan: 4, girisimcilik: 5, yz: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Sektör rekabetçidir ve iş bulma kolaylığı, büyük ölçüde adayın yaratıcılığına ve portfolyosunun gücüne bağlıdır.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025 için "Moda Tasarımcısı" ortalama maaşı 55.200 TL, "Tekstil Tasarımcısı" ise 54.300 TL'dir. [22, 24] Kendi markasını yaratanlar için kazanç potansiyeli sınırsızdır.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Tasarım sürecinin büyük bir kısmı uzaktan yürütülebilir. Bu durum, freelance olarak birden fazla markaya hizmet vermeye olanak tanır. [27]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Çok Yüksek. Kendi giyim markasını veya tasarım atölyesini kurmak için en uygun alanlardan biridir. [28, 29] E-ticaret platformları ve sosyal medya, küçük sermaye ile başlamayı kolaylaştırmaktadır. [28]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Yüksek. YZ, trend analizi yapabilir veya basit desenler oluşturabilir. Ancak moda; kültür, duygu ve özgünlükten beslenen bir sanat formudur ve YZ'nin bir tasarımcının sezgisel yaratıcılığını kopyalaması mümkün değildir. [30, 4]</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Yaratıcılığın ve iş zekasının birleştiği bir noktadadır. Sadece iyi tasarım yapmak değil, aynı zamanda marka yönetimi, pazarlama ve finans bilgisi de gerekir. Üniversite hayatı boyunca işletme ve dijital pazarlama yetkinliklerini geliştirmek, başarıya giden yolu kısaltacaktır.</p>
+                </div>
+            `
+        },
+        {
+            id: 'kamu-yonetimi',
+            name: 'Kamu Yönetimi',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 2, maas: 3, uzaktan: 2, girisimcilik: 1, yz: 3 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Birincil hedef, KPSS A grubu sınavları ile girilebilen müfettişlik, denetçilik gibi kamu kadrolarıdır. [31] Ancak bu kadrolar için kontenjanlar son derece sınırlıdır ve rekabet çok yüksektir. [32]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Kamu sektöründe maaşlar orta düzeydedir. Ancak özel sektör veya uluslararası kuruluşlarda (BM, Dünya Bankası) maaşlar 70.000 TL gibi daha yüksek seviyelere çıkabilmektedir. [33]</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Kamu kurumlarındaki çalışma kültürü genellikle ofiste bulunmayı gerektirir. Uzaktan çalışma imkanları sınırlıdır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Çok Düşük. Bölümün doğası, girişim kurmaktan ziyade mevcut kurumsal yapılar içinde çalışmaya yöneliktir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Orta-Yüksek. Politika geliştirme, yasa taslağı hazırlama, stratejik planlama gibi görevler; etik muhakeme ve müzakere becerisi gibi insani beceriler gerektirir. [4]</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>İdealist ve kamu hizmeti motivasyonu yüksek bireyler için anlamlıdır. Ancak istihdam piyasasının gerçekleri göz ardı edilmemelidir. KPSS A'ya ilk yıldan hazırlanmak bir zorunluluktur. Alternatif olarak, uluslararası ilişkiler, çevre politikaları gibi spesifik bir alanda uzmanlaşmak ve bunu yüksek lisansla desteklemek, özel sektör için daha rekabetçi bir profil oluşturur.</p>
+                </div>
+            `
+        },
+        {
+            id: 'arkeoloji',
+            name: 'Arkeoloji',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 2, maas: 3, uzaktan: 2, girisimcilik: 1, yz: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Ana istihdam alanları Kültür ve Turizm Bakanlığı'na bağlı müzeler, kazı başkanlıkları ve üniversitelerdir. [34] Bu pozisyonların sayısı oldukça sınırlıdır ve atamalar KPSS veya akademik sınavlara bağlıdır.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025'te bir arkeoloğun ortalama maaşı 54.400 TL'dir. Deneyimli uzmanlar için 86.000 TL'ye kadar çıkabilmektedir. [35]</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Mesleğin temelini kazı ve saha çalışmaları oluşturur. Ancak araştırma, makale yazımı ve dijital arşivleme gibi işler ofis/ev ortamında yapılabilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Çok Düşük. Bireysel bir girişimcilik modeli bu alan için geçerli değildir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Yüksek. YZ, uydu görüntülerini analiz ederek potansiyel kazı alanlarını tespit edebilir veya eserleri sınıflandırabilir. [36, 37] Ancak bulguları yorumlamak, tarihi bağlamı kurmak ve yeni teoriler üretmek tamamen arkeoloğun entelektüel birikimine bağlıdır. YZ, güçlü bir kazmadır; beyin ise arkeologdur.</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Tutku ve adanmışlık gerektiren bir bilim dalıdır. Başarılı olmak için akademik kariyeri hedeflemek, yüksek lisans/doktora yapmak, antik dil öğrenmek ve GIS ile YZ tabanlı analiz araçları gibi teknolojik yetkinlikler kazanmak kritik öneme sahiptir.</p>
+                </div>
+            `
+        },
+        {
+            id: 'turk-dili',
+            name: 'Türk Dili ve Edebiyatı',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 2, maas: 2, uzaktan: 4, girisimcilik: 3, yz: 2 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>En geleneksel kariyer yolu, formasyon alarak öğretmen olmaktır, ancak atamalar rekabetçidir. [38] Alternatif olarak, yayınevlerinde editörlük, reklam ajanslarında metin yazarlığı, medya kuruluşlarında içerik üreticiliği gibi imkanlar mevcuttur. [38, 39, 40]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025 yılı için Türk Dili ve Edebiyatı Öğretmeni'nin ortalama maaşı 26.400 TL'dir. [41] Özel sektör pozisyonlarında maaşlar daha değişkendir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Yüksek. Editörlük, metin yazarlığı, çevirmenlik gibi kariyer yolları uzaktan ve freelance çalışmaya son derece uygundur. [27, 39]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Orta. Freelance metin yazarlığı, editörlük hizmetleri sunarak kendi işini yürütebilir veya bir içerik ajansı kurabilir.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Orta. YZ, basit metinleri üretebilir, bu da temel seviye metin yazarlarını tehdit edebilir. [30] Ancak bir markanın ses tonunu oluşturmak, yaratıcı ve duygusal bağ kuran bir hikaye anlatmak gibi görevler insani yaratıcılık gerektirir.</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Başarı, diplomanın ötesinde geliştirilecek ek yetkinliklere bağlıdır. Dijital pazarlama, SEO, sosyal medya yönetimi gibi alanlarda kendini geliştiren bir mezun, özel sektörde aranan bir profesyonel haline gelebilir. Üniversite yıllarında bir blog yazmak ve portfolyo oluşturmak önemlidir.</p>
+                </div>
+            `
+        },
+        {
+            id: 'tarih',
+            name: 'Tarih',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 2, maas: 2, uzaktan: 3, girisimcilik: 2, yz: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Ana kariyer yolu formasyon alarak Tarih öğretmeni olmaktır ve bu yol oldukça rekabetçidir. [42] Diğer kamu seçenekleri arasında Devlet Arşivleri, Türk Tarih Kurumu ve müzeler bulunur ki bu kadrolar da sınırlıdır. [34, 42]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025 yılı için Tarih Öğretmeni ortalama maaşı 35.000 TL olarak öngörülmektedir. [43] Özel sektördeki maaşlar ise tamamen yapılan işin niteliğine bağlıdır.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Orta. Akademik araştırma, yazarlık, editörlük ve online danışmanlık gibi görevler uzaktan yürütülebilir.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Düşük. Ancak popüler tarih alanında içerik üreten bir YouTube kanalı kurmak veya tarihi dizi/film projelerine danışmanlık yapmak gibi bireysel girişimcilik yolları mevcuttur.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Yüksek. YZ, milyonlarca sayfa arşivi tarayabilir, ancak bu verilerden bir anlam çıkarmak, neden-sonuç ilişkileri kurmak ve tarihi olayları yorumlamak tamamen tarihçinin analitik ve eleştirel düşünme becerilerine bağlıdır. [44]</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Entelektüel merakı yüksek bireyler için zengin bir alandır. Osmanlıca gibi bir alan dilini öğrenmek, dijital beşeri bilimler ve arşivcilik teknolojileri üzerine kendini geliştirmek ve belirli bir dönem üzerine uzmanlaşmak, kariyer kapılarını açacaktır.</p>
+                </div>
+            `
+        },
+        {
+            id: 'gorsel-iletisim',
+            name: 'Görsel İletişim Tasarımı',
+            degree: 'Lisans',
+            criteria:,
+            ratings: { isBulma: 3, maas: 4, uzaktan: 5, girisimcilik: 5, yz: 3 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Dijitalleşen dünyada görsel içeriğe olan talep patlamıştır. Reklam ajansları, yazılım şirketleri (UI/UX), oyun stüdyoları gibi alanlarda iş imkanları geniştir. [45] Ancak iş bulma, diplomadan çok güçlü bir portfolyoya bağlıdır.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025 için "Görsel İletişim Uzmanı" ortalama maaşı 39.500 TL olsa da [46], bu başlangıç seviyesidir. Özellikle UI/UX (Kullanıcı Arayüzü/Kullanıcı Deneyimi) tasarımı gibi alanlarda uzmanlaşanların maaşları çok daha yüksektir.</p>
+                <h4>Evde/Uzaktan Çalışma İmkanı</h4>
+                <p>Çok Yüksek. Uzaktan çalışmaya en uygun alanlardan biridir. Freelance veya "dijital göçebe" olarak çalışma özgürlüğü sunar. [47, 48]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Çok Yüksek. Kolaylıkla freelance olarak çalışmaya başlayabilir ve zamanla kendi tasarım ajansını kurabilir. [49, 50] Düşük başlangıç maliyetleri ve yüksek talep, bu alanı girişimcilik için cazip kılar.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Orta (Adaptasyon Koşuluyla). YZ tabanlı araçlar basit görseller üretebilir. [30] Ancak bir markanın bütünsel görsel kimliğini yaratmak, bir kullanıcı arayüzünün stratejisini tasarlamak gibi görevler stratejik düşünme ve yaratıcılık gerektirir. Geleceğin tasarımcısı, YZ'yi bir araç olarak kullanan bir "sanat yönetmeni" olacaktır.</p>
+                <div class="analyst-note">
+                    <h5>Analist Değerlendirmesi ve Stratejik Öngörüler</h5>
+                    <p>Teknoloji, sanat ve psikolojinin kesişiminde yer alan heyecan verici bir alandır. Başarı için sadece Adobe programlarını bilmek yetmez; kullanıcı deneyimi (UX) prensipleri, pazarlama stratejileri ve proje yönetimi becerileri de öğrenilmelidir. Behance, Dribbble gibi platformlarda aktif bir portfolyo oluşturmak kritiktir.</p>
+                </div>
+            `
+        },
+    ],
+    onlisans:,
+            ratings: { isBulma: 4, maas: 2, uzaktan: 1, girisimcilik: 4, yz: 5, dgs: 5 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Kreşler, anaokulları, özel eğitim merkezleri gibi alanlarda "çocuk gelişimi elemanı" olarak kolaylıkla iş bulabilirler. Talep süreklidir.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Önlisans mezunları için maaşlar genellikle asgari ücretin biraz üzerindedir. Kamu veya büyük özel okullarda yeni mezun bir uzman 35.000-40.000 TL arası maaş alabilir. [51] Potansiyeli artıran asıl faktör DGS ile lisans tamamlamaktır.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Yüksek. Gerekli yasal şartları sağlayan herkes kendi kreşini veya gündüz bakımevini açabilir. [52, 53] 2 yıllık mezunlar, kendi açtıkları kreşte "grup sorumlusu" (öğretmen) olarak da görev yapabilirler. [53]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Çok Yüksek. Bir çocuğun duygusal ve sosyal gelişimini desteklemek, onlarla oyun oynamak, empati kurmak gibi görevler YZ'nin asla yapamayacağı, tamamen insani beceriler gerektirir. [4]</p>
+                <div class="analyst-note">
+                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
+                    <p>Çok Yüksek. Bu bölüm, DGS ile 4 yıllık Çocuk Gelişimi, Okul Öncesi Öğretmenliği ve Sosyal Hizmet gibi bölümlere geçiş için en avantajlı programlardan biridir. 2 yıllık eğitimi, 4 yıllık bir kariyere giden sağlam bir basamak olarak görmek en doğru stratejidir.</p>
+                </div>
+            `
+        },
+        {
+            id: 'yasli-bakimi',
+            name: 'Yaşlı Bakımı',
+            degree: 'Önlisans',
+            criteria:,
+            ratings: { isBulma: 5, maas: 3, uzaktan: 1, girisimcilik: 3, yz: 5, dgs: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Çok Yüksek. Türkiye'nin hızla yaşlanan nüfusu, bu alandaki nitelikli teknikerlere olan talebi patlatmıştır. Huzurevleri, yaşlı bakım merkezleri, evde bakım ajansları ve hastanelerde çok rahat iş bulabilirler.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025 için "Yaşlı Bakım Teknikeri" ortalama maaşı 34.800 TL'dir. [54] Kamuda kadrolu çalışan bir teknikerin maaşı ek ödemelerle 50.000-55.000 TL seviyelerine çıkabilmektedir. [55]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Orta. Özel bir yaşlı bakım merkezi kurmak mümkündür, ancak yüksek sermaye, karmaşık yasal prosedürler ve tıbbi altyapı gerektirir. [56, 57]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Çok Yüksek. Yaşlı bakımı, şefkat, sabır, empati ve insani dokunuş gerektiren bir hizmettir. YZ, bu hizmetin özünü oluşturan duygusal desteğin ve fiziksel bakımın yerini alamaz. [4]</p>
+                <div class="analyst-note">
+                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
+                    <p>Yüksek. Mezunlar DGS ile Hemşirelik, Sosyal Hizmet ve Sağlık Yönetimi gibi 4 yıllık bölümlere geçiş yaparak kariyer potansiyellerini ve maaş beklentilerini önemli ölçüde artırabilirler.</p>
+                </div>
+            `
+        },
+        {
+            id: 'bilgisayar-animasyon',
+            name: 'Bilgisayar Destekli Tasarım ve Animasyon',
+            degree: 'Önlisans',
+            criteria:,
+            ratings: { isBulma: 4, maas: 3, uzaktan: 5, girisimcilik: 4, yz: 3, dgs: 5 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Reklam ajansları, animasyon stüdyoları, oyun şirketleri, TV kanalları ve mimarlık ofislerinde animatör, 3D modelleme uzmanı olarak iş bulabilirler. [58] Portfolyo, diplomadan daha önemlidir.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Önlisans seviyesinde 2025 için ortalama maaş 33.200 TL'dir. [59] Ancak potansiyel, yeteneğe ve DGS ile lisans tamamlama durumuna bağlıdır. Benzer alandaki "Oyun Geliştirici" maaşları ortalama 62.700 TL'dir. [59]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Yüksek. Mezunlar, freelance olarak çalışabilir veya kendi animasyon/tasarım stüdyolarını kurabilirler. [60]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Orta. YZ, basit animasyon döngüleri veya 3D modeller oluşturabilir. Ancak özgün bir karakter tasarlamak ve bir hikayeyi animasyonla anlatmak insani yaratıcılık gerektirir. YZ, bir rakip değil, bir araçtır.</p>
+                <div class="analyst-note">
+                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
+                    <p>Çok Yüksek. Bu bölüm, DGS ile Görsel İletişim Tasarımı, Grafik Tasarım, Çizgi Film ve Animasyon gibi çok değerli lisans programlarına geçiş için bir köprü olarak görülmelidir. 2 yıllık eğitimde teknik beceriler ve güçlü bir portfolyo oluşturup, DGS ile akademik altyapıyı tamamlamak en ideal kariyer yoludur.</p>
+                </div>
+            `
+        },
+        {
+            id: 'gida-teknolojisi',
+            name: 'Gıda Teknolojisi',
+            degree: 'Önlisans',
+            criteria:,
+            ratings: { isBulma: 4, maas: 3, uzaktan: 1, girisimcilik: 4, yz: 3, dgs: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Gıda sektörü, krizlerden en az etkilenen bir alandır. Mezunlar, gıda üreten her türlü fabrikanın üretim, kalite kontrol ve Ar-Ge laboratuvarlarında "gıda teknikeri" olarak çalışabilirler. [61, 62]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Maaşlar genellikle sanayi sektöründeki tekniker maaşları seviyesindedir ve deneyimle artar.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Yüksek. Gerekli izinleri alarak [63, 64] kendi butik gıda üretim tesislerini (organik ürünler, yöresel lezzetler vb.) kurabilirler.</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Orta. Kalite kontrol, reçete optimizasyonu gibi süreçler YZ ile otomatize edilebilir. Ancak yeni ürün geliştirme (Ar-Ge) ve duyusal analiz teknikerin uzmanlığını gerektirir.</p>
+                <div class="analyst-note">
+                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
+                    <p>Yüksek. Mezunlar, DGS ile Gıda Mühendisliği, Beslenme ve Diyetetik veya Kimya gibi bölümlere geçerek hem yetkinliklerini hem de maaş potansiyellerini önemli ölçüde artırabilirler.</p>
+                </div>
+            `
+        },
+        {
+            id: 'moda-tasarimi-onlisans',
+            name: 'Moda Tasarımı',
+            degree: 'Önlisans',
+            criteria:,
+            ratings: { isBulma: 3, maas: 3, uzaktan: 4, girisimcilik: 5, yz: 4, dgs: 5 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>İş bulma adayın portfolyosuna ve yaratıcılığına bağlıdır. Mezunlar, hazır giyim markalarında "moda tasarım teknikeri" olarak çalışabilirler. [65]</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>2025 yılı için ortalama tekniker maaşı 33.400 TL'dir. [66] Bu rakam, 4 yıllık mezun bir tasarımcının (ortalama 55.200 TL) maaşından düşüktür, bu da DGS'nin önemini gösterir. [66]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Çok Yüksek. Kendi markasını veya atölyesini kurma potansiyeli bu bölüm için de geçerlidir. [65]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Yüksek. Yaratıcılık ve estetik anlayış, YZ'ye karşı en büyük korumadır.</p>
+                <div class="analyst-note">
+                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
+                    <p>Çok Yüksek. Bu bölüm, 4 yıllık Tekstil ve Moda Tasarımı bölümüne geçiş için en doğal ve avantajlı yollardan biridir. 2 yıllık eğitimde pratik becerileri kazanıp, 4 yıllık eğitimde vizyon ve teorik altyapıyı güçlendirmek en doğru stratejidir.</p>
+                </div>
+            `
+        },
+        {
+            id: 'halkla-iliskiler',
+            name: 'Halkla İlişkiler ve Tanıtım',
+            degree: 'Önlisans',
+            criteria:,
+            ratings: { isBulma: 3, maas: 3, uzaktan: 4, girisimcilik: 4, yz: 2, dgs: 5 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Rekabet yüksektir çünkü pozisyonlar için genellikle 4 yıllık İletişim Fakültesi mezunları tercih edilir.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>"Halkla İlişkiler Sorumlusu" için ortalama maaş 36.000 TL, "Uzmanı" için 36.500 TL'dir. [67, 68] Müdür seviyesinde 46.100 TL'ye çıkmaktadır. [67]</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Yüksek. Deneyim kazanan mezunlar, freelance olarak sosyal medya yönetimi yapabilir veya kendi butik dijital iletişim ajanslarını kurabilirler. [69, 70]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Düşük-Orta. YZ, basit sosyal medya paylaşımları veya basın bültenleri yazabilir. [30] Ancak kriz iletişimi, marka stratejisi gibi görevler stratejik akıl ve empati gerektirir.</p>
+                <div class="analyst-note">
+                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
+                    <p>Çok Yüksek. Bu bölüm, İletişim Fakültesi'nin birçok lisans programına geçiş için mükemmel bir temel oluşturur. Kariyer potansiyelini maksimize etmek için DGS ile lisans tamamlama hedeflenmelidir.</p>
+                </div>
+            `
+        },
+        {
+            id: 'metalurji',
+            name: 'Metalurji',
+            degree: 'Önlisans',
+            criteria:,
+            ratings: { isBulma: 4, maas: 3, uzaktan: 1, girisimcilik: 2, yz: 3, dgs: 4 },
+            details: `
+                <h4>İş Bulma Kolaylığı</h4>
+                <p>Demir-çelik, otomotiv, döküm gibi sanayinin temel sektörlerinde, üretim ve kalite kontrol laboratuvarlarında "metalurji teknikeri" olarak istihdam edilirler. [71, 72] Nitelikli ara eleman ihtiyacı süreklidir.</p>
+                <h4>Maaş Potansiyeli</h4>
+                <p>Maaşlar, sanayi sektöründeki diğer tekniker pozisyonlarıyla benzer seviyededir ve deneyimle artar.</p>
+                <h4>Kendi İşini Kurma Potansiyeli</h4>
+                <p>Düşük. Üretim tesisi kurmak devasa sermaye gerektirir. Ancak tecrübeli bir tekniker, test ve analiz hizmetleri sunan küçük bir laboratuvar kurabilir. [73, 74]</p>
+                <h4>Yapay Zekaya Karşı Dayanıklılık</h4>
+                <p>Orta. Üretim süreçlerinin optimizasyonu, kalite kontrol gibi alanlarda YZ ve otomasyon yoğun olarak kullanılmaktadır. [75, 76] Ancak YZ sistemlerini denetlemek ve beklenmedik hataları gidermek insan uzmanlığı gerektirir.</p>
+                <div class="analyst-note">
+                    <h5>Stratejik Öngörü (DGS Potansiyeli)</h5>
+                    <p>Yüksek. Mezunlar, DGS ile Metalurji ve Malzeme Mühendisliği bölümüne geçiş yaparak hem mühendis unvanı alabilir hem de kariyer ve maaş potansiyellerini en üst düzeye çıkarabilirler.</p>
+                </div>
+            `
+        }
+    ]
+};
 
-            const accordionData = [
-                { title: 'Ters Kinematik (IK)', content: 'Bir uzvun son noktasını hareket ettirerek tüm eklemleri pozlamayı sağlar. Atın bacaklarını doğal ve sezgisel bir şekilde canlandırmak için vazgeçilmezdir.' },
-                { title: 'Meshes & FFD', content: 'Görüntüleri esnetip bükerek organik deformasyonlar yaratır. Atın vücudunun ve boynunun nefes alıp verirken veya dönerken esnemesi için gereklidir.' },
-                { title: 'Ağırlıklar (Skinning)', content: 'Mesh noktalarını birden fazla kemiğe bağlayarak eklemlerde pürüzsüz bükülmeler sağlar. Atın diz ve dirsek gibi eklemlerinin doğal görünmesi için kritiktir.' },
-                { title: 'Dönüşüm Kısıtlamaları', content: 'Bir kemiğin hareketini diğerine bağlar. Atın hareketinin arabayı çekmesini sağlamak, yani iki rigi birbirine entegre etmek için kullanılır.' },
-                { title: 'Yol Kısıtlamaları', content: 'Kemiklerin belirli bir yolu takip etmesini sağlar. Kamçı, dizgin gibi akıcı, takip eden hareketler veya tüm arabanın bir yörüngede gitmesi için idealdir.' },
-                { title: 'Fizik Kısıtlamaları', content: 'İkincil hareketleri otomatik olarak simüle eder. Arabaya bağlı fenerin, ana harekete göre gerçekçi bir şekilde sallanması için kullanılır, animasyon süresini kısaltır.' }
-            ];
+document.addEventListener('DOMContentLoaded', function() {
+    const lisansGrid = document.getElementById('lisans-grid');
+    const onlisansGrid = document.getElementById('onlisans-grid');
+    const modal = document.getElementById('departmentModal');
+    const modalBody = document.getElementById('modal-body-content');
+    const closeModalBtn = document.querySelector('.close-btn');
+    const lisansTableBody = document.querySelector('#lisans-table tbody');
+    const onlisansTableBody = document.querySelector('#onlisans-table tbody');
 
-            const accordionContainer = document.getElementById('accordion-container');
-            accordionData.forEach((item, index) => {
-                const accordionItem = document.createElement('div');
-                accordionItem.className = 'border-b border-gray-200';
-                accordionItem.innerHTML = `
-                    <button class="accordion-toggle w-full text-left py-4 px-2 flex justify-between items-center text-lg font-semibold text-gray-700 hover:bg-gray-50">
-                        <span>${item.title}</span>
-                        <span class="transform transition-transform duration-300">▶</span>
-                    </button>
-                    <div class="accordion-content px-2">
-                        <p class="py-4 text-gray-600">${item.content}</p>
-                    </div>
-                `;
-                accordionContainer.appendChild(accordionItem);
-            });
+    function createDepartmentCard(dept) {
+        const card = document.createElement('div');
+        card.className = 'department-card';
+        
+        let criteriaHtml = dept.criteria.map(c => `<li><i class="fas ${c.icon}"></i> ${c.text}</li>`).join('');
 
-            const toggles = document.querySelectorAll('.accordion-toggle');
-            toggles.forEach(toggle => {
-                toggle.addEventListener('click', () => {
-                    const content = toggle.nextElementSibling;
-                    const icon = toggle.querySelector('span:last-child');
-                    
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        icon.style.transform = 'rotate(0deg)';
-                    } else {
-                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
-                        document.querySelectorAll('.accordion-toggle span:last-child').forEach(i => i.style.transform = 'rotate(0deg)');
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        icon.style.transform = 'rotate(90deg)';
-                    }
-                });
-            });
+        card.innerHTML = `
+            <div class="card-header">
+                <h3>${dept.name}</h3>
+                <div class="degree-type">${dept.degree}</div>
+            </div>
+            <div class="card-body">
+                <ul class="criteria-list">
+                    ${criteriaHtml}
+                </ul>
+            </div>
+            <div class="card-footer">
+                <button class="card-btn" data-id="${dept.id}" data-type="${dept.degree.toLowerCase()}">Detayları Gör</button>
+            </div>
+        `;
+        return card;
+    }
 
-            const toolCtx = document.getElementById('toolComparisonChart').getContext('2d');
-            new Chart(toolCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Spine 2D', 'Unity 2D Anim', 'Blender (2D)', 'Adobe Animate', 'Rive'],
-                    datasets: [{
-                        label: 'Uygunluk Skoru (10 üzerinden)',
-                        data: [10, 7, 6.5, 6, 5],
-                        backgroundColor: ['#005f73', '#0a9396', '#94d2bd', '#e9d8a6', '#ee9b00'],
-                        borderColor: '#ffffff',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ` Uygunluk: ${context.raw}/10`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            max: 10,
-                            grid: {
-                                color: '#e9ecef'
-                            }
-                        },
-                        y: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
+    function openModal(dept) {
+        modalBody.innerHTML = `<h2 class="modal-title">${dept.name}</h2>${dept.details}`;
+        modal.style.display = 'block';
+    }
 
-            const licenseCtx = document.getElementById('licenseComparisonChart').getContext('2d');
-            new Chart(licenseCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Professional (Gerekli Özellikler)', 'Professional (Diğer)', 'Essential (Gerekli Özellikler)', 'Essential (Diğer)'],
-                    datasets: [{
-                        label: 'Lisans Kapsamı',
-                        data: [100, 0, 25, 75],
-                        backgroundColor: ['#005f73', '#e9ecef', '#ee9b00', '#e9ecef'],
-                        borderColor: '#ffffff',
-                        borderWidth: 4,
-                        circumference: 180,
-                        rotation: 270,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '60%',
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                filter: function(item, chart) {
-                                    return !item.text.includes('Diğer');
-                                },
-                                color: '#495057'
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    if (context.label.includes('Professional')) return ' Proje için gerekli özelliklerin %100\'ünü kapsar.';
-                                    if (context.label.includes('Essential')) return ' Proje için gerekli özelliklerin sadece %25\'ini kapsar.';
-                                    return '';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+    function createRatingStars(rating) {
+        let stars = '';
+        for (let i = 0; i < 5; i++) {
+            stars += `<i class="fas fa-star ${i < rating? 'rating-star' : ''}" style="opacity: ${i < rating? 1 : 0.3};"></i>`;
+        }
+        return stars;
+    }
 
-            const header = document.getElementById('header');
-            const sections = document.querySelectorAll('section[id]');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        document.querySelectorAll('.nav-link').forEach((link) => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, { rootMargin: "-50% 0px -50% 0px" });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
+    function populateTable(tableBody, data, isLisans = true) {
+        data.forEach(dept => {
+            const row = document.createElement('tr');
+            let dgsCell = isLisans? '' : `<td class="rating-cell">${createRatingStars(dept.ratings.dgs)}</td>`;
+            row.innerHTML = `
+                <td>${dept.name}</td>
+                <td class="rating-cell">${createRatingStars(dept.ratings.isBulma)}</td>
+                <td class="rating-cell">${createRatingStars(dept.ratings.maas)}</td>
+                <td class="rating-cell">${createRatingStars(dept.ratings.uzaktan)}</td>
+                <td class="rating-cell">${createRatingStars(dept.ratings.girisimcilik)}</td>
+                <td class="rating-cell">${createRatingStars(dept.ratings.yz)}</td>
+                ${dgsCell}
+            `;
+            tableBody.appendChild(row);
         });
-    </script>
+    }
+
+    // Populate Grids
+    departments.lisans.forEach(dept => lisansGrid.appendChild(createDepartmentCard(dept)));
+    departments.onlisans.forEach(dept => onlisansGrid.appendChild(createDepartmentCard(dept)));
+
+    // Populate Tables
+    populateTable(lisansTableBody, departments.lisans, true);
+    populateTable(onlisansTableBody, departments.onlisans, false);
+
+    // Modal Event Listeners
+    document.body.addEventListener('click', function(e) {
+        if (e.target.classList.contains('card-btn')) {
+            const deptId = e.target.dataset.id;
+            const type = e.target.dataset.type === 'lisans'? 'lisans' : 'onlisans';
+            const departmentData = departments[type].find(d => d.id === deptId);
+            if (departmentData) {
+                openModal(departmentData);
+            }
+        }
+    });
+
+    closeModalBtn.onclick = () => modal.style.display = 'none';
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+    // Responsive Navbar
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+});
+</script>
+
 </body>
 </html>
