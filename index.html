@@ -157,9 +157,12 @@ KURALLAR:
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        model: 'qwen2.5:14b',
+                        model: 'gemma2:9b',
                         messages: messagesToSend,
-                        stream: false
+                        stream: true,
+                        options: {
+                            num_ctx: 4096 // VRAM'i korumak için bağlam hafızasını sınırlandırır
+                        }
                     })
                 });
 
