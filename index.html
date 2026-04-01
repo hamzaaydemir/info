@@ -1,32 +1,71 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yapay Zeka Etik İkilem Simülasyonu</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        #setup-container, #chat-container, #log-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 800px; width: 100%; margin-bottom: 20px; }
-        #chat-container, #log-container { display: none; height: 75vh; flex-direction: column; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #setup-container,
+        #intro-container,
+        #chat-container,
+        #log-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* Başlangıçta gizli olan bölümler */
+        #intro-container,
+        #chat-container,
+        #log-container {
+            display: none;
+            flex-direction: column;
+        }
+
+        #chat-container { height: 75vh; }
+
         h2 { margin-top: 0; color: #333; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        
         button { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; }
         button:hover { background-color: #0056b3; }
         button.danger { background-color: #dc3545; }
         button.danger:hover { background-color: #c82333; }
         button:disabled { background-color: #6c757d; cursor: not-allowed; }
+        
+        /* Hikaye metni stilleri */
+        .story-text { font-size: 1.1em; line-height: 1.6; color: #444; margin-bottom: 20px; text-align: justify; }
+        .story-text p { margin-bottom: 15px; }
+
         #messages { flex-grow: 1; overflow-y: auto; border: 1px solid #eee; padding: 15px; border-radius: 5px; margin-bottom: 15px; background-color: #fafafa; display: flex; flex-direction: column; gap: 10px; }
         .message { max-width: 80%; padding: 10px 15px; border-radius: 15px; line-height: 1.4; }
         .message.user { align-self: flex-end; background-color: #007bff; color: white; border-bottom-right-radius: 2px; }
         .message.bot { align-self: flex-start; background-color: #e9ecef; color: #333; border-bottom-left-radius: 2px; }
-        .system-scenario { font-style: italic; background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 5px solid #ffeeba; font-size: 0.95em;}
+        
+        .system-scenario { font-style: italic; background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 5px solid #ffeeba; font-size: 0.95em; }
         .input-area { display: flex; gap: 10px; }
         .input-area input { flex-grow: 1; }
         #csv-output { width: 100%; height: 400px; font-family: monospace; white-space: pre; overflow-wrap: normal; overflow-x: scroll; }
     </style>
 </head>
+
 <body>
 
     <div id="setup-container">
@@ -42,13 +81,25 @@
                 <option value="coach">Üstbilişsel Rehber (The Coach)</option>
             </select>
         </div>
-        <button onclick="startChat()">Sohbete Başla</button>
+        <button onclick="goToIntro()">Devam Et</button>
+    </div>
+
+    <div id="intro-container">
+        <h2>Görev Dosyası: Otonom Asistanın İkilemi</h2>
+        <div class="story-text">
+            <p>Günümüzde yapay zeka sistemleri sadece kod yazmamıza veya metin üretmemize yardımcı olmuyor; aynı zamanda eğitim kurumlarında karar verici merciler olarak da konumlandırılmaya başlanıyor. Hayal et: Çalıştığın üniversitenin bilgisayar mühendisliği bölümünde, binlerce öğrencinin kodlama ödevini saniyeler içinde okuyan, test eden ve notlandıran otonom bir "Yapay Zeka Değerlendirme Asistanı" kullanılıyor. Bu sistem kusursuz çalışıyor ve hile yapanları anında tespit ediyor.</p>
+
+            <p>Ancak bugün sistemin önüne farklı bir dosya düştü. Okulun en başarılı öğrencilerinden biri, tam burslu okuyan ve ailesinin maddi imkansızlıkları nedeniyle bu bursa hayati derecede ihtiyaç duyan bir son sınıf öğrencisi... Final projesini yetiştiremediği bir kriz anında paniğe kapılarak kodunun bir kısmını yasaklı bir yapay zeka aracına yazdırdı. Otonom asistan bu ihlali yüzde yüz kesinlikle tespit etti. Üniversitenin akademik dürüstlük kuralları çok net: İntihal veya yapay zeka yardımı tespit edilen öğrenci <strong>doğrudan okuldan atılır ve bursu kesilir.</strong></p>
+
+            <p>Fakat asistanın yazılımında deneysel bir "etik inisiyatif" modülü de var. Bu modül, öğrencinin daha önceki kusursuz geçmişini ve niyetini göz önüne alarak kuralı esnetme ve sadece uyarı verme yetkisine sahip. Katı kuralı işletip onun hayatını karartmak mı, yoksa inisiyatif alıp adaletin terazisini esnetmek mi? Birazdan sistemle bu konuyu tartışacaksın. Tarafını seç ve argümanlarını hazırla.</p>
+        </div>
+        <button onclick="startChat()">İkilemi Çözmeye Başla</button>
     </div>
 
     <div id="chat-container">
         <h2>Etik İkilem Simülasyonu</h2>
         <div class="system-scenario">
-            <strong>Senaryo:</strong> Bir üniversitede kodlama ödevlerini değerlendiren yapay zeka sistemi, başarılı ve burslu bir öğrencinin final projesinde yasaklanmış bir yapay zeka aracından destek aldığını (intihal) tespit ediyor. Kurallara göre ceza okuldan atılmak. Ancak sistemin "öğrencinin geçmişi ve niyetine göre inisiyatif kullanıp sadece uyarı verme" yetkisi de var. Sistem kuralları mı uygulamalı, inisiyatif mi kullanmalı?
+            <strong>Kısa Hatırlatma:</strong> Bir üniversitede kodlama ödevlerini değerlendiren yapay zeka sistemi, başarılı ve burslu bir öğrencinin final projesinde yasaklanmış bir yapay zeka aracından destek aldığını (intihal) tespit ediyor. Kurallara göre ceza okuldan atılmak. Ancak sistemin "öğrencinin geçmişi ve niyetine göre inisiyatif kullanıp sadece uyarı verme" yetkisi de var. Sistem kuralları mı uygulamalı, inisiyatif mi kullanmalı?
         </div>
         <div id="messages"></div>
         <div class="input-area">
@@ -68,10 +119,10 @@
     <script>
         let studentId = '';
         let currentPersona = '';
-        let chatHistory = []; 
-        let apiContext = []; 
-        let messageIdCounter = 0; 
-        let isProcessing = false; 
+        let chatHistory = [];
+        let apiContext = [];
+        let messageIdCounter = 0;
+        let isProcessing = false;
 
         const systemPrompts = {
             challenger: `ROL: Sokratik Etik Sorgulayıcısı.
@@ -82,8 +133,8 @@ KURALLAR:
 2. DAYANAK SORGULA: Öğrencinin son ifadesini temel alarak iddiasının kanıtını veya varsayımlarını sorgula (Toulmin).
 3. KISA OL: Açıklama veya paragraf yazma. Tek seferde en fazla 1-2 vurucu soru sor.
 4. ODAKTA KAL: Konu saparsa, öğrenciyi hemen "asıl argümanın dayanağına" geri çek.`,
-            
-           coach: `ROL: Üstbilişsel (Metacognitive) Etik Koçu.
+
+            coach: `ROL: Üstbilişsel (Metacognitive) Etik Koçu.
 GÖREV: Kararın doğru/yanlış olmasıyla ilgilenmeden, öğrencinin o karara ulaşırken izlediği "zihinsel süreci" (nasıl düşündüğünü) açığa çıkarmak.
 KONU: YZ asistanının, kopyasını yakaladığı burslu öğrenci için kuralı mı (okuldan atılma) inisiyatifi mi (uyarı) seçeceği ikilemi.
 KURALLAR:
@@ -93,7 +144,8 @@ KURALLAR:
 4. KISA OL: Kalıp cümleler veya uzun metinler kurma. Tek seferde sadece 1 net soru sor.`
         };
 
-        function startChat() {
+        // Yeni Eklenen Fonksiyon: Kurulumdan Hikayeye Geçiş
+        function goToIntro() {
             studentId = document.getElementById('student-id').value.trim();
             if (!studentId) {
                 alert('Lütfen öğrenci adını veya numarasını girin.');
@@ -102,21 +154,28 @@ KURALLAR:
             
             const selectElement = document.getElementById('persona-select');
             currentPersona = selectElement.value;
-            const personaName = selectElement.options[selectElement.selectedIndex].text;
 
             document.getElementById('setup-container').style.display = 'none';
+            document.getElementById('intro-container').style.display = 'flex';
+        }
+
+        // Değiştirilen Fonksiyon: Hikayeden Sohbete Geçiş
+        function startChat() {
+            const selectElement = document.getElementById('persona-select');
+            const personaName = selectElement.options[selectElement.selectedIndex].text;
+
+            document.getElementById('intro-container').style.display = 'none';
             document.getElementById('chat-container').style.display = 'flex';
 
             logInteraction('System', `Simülasyon Başladı. Öğrenci: ${studentId} | Mod: ${personaName}`);
-            
-            let firstMessage = currentPersona === 'challenger' 
-                ? "Senaryoyu okudun. Sence yapay zeka asistanı kuralları mı uygulamalı, inisiyatif mi kullanmalı ve bunu hangi temele dayandırıyorsun?" 
+
+            let firstMessage = currentPersona === 'challenger'
+                ? "Senaryoyu okudun. Sence yapay zeka asistanı kuralları mı uygulamalı, inisiyatif mi kullanmalı ve bunu hangi temele dayandırıyorsun?"
                 : "Bu etik senaryoyu çözmeye başlamadan önce, durumu analiz etmek için zihninde nasıl bir yol haritası belirledin?";
-            
+
             appendMessage('bot', firstMessage);
             logInteraction('AI', firstMessage);
-            
-            // Ollama (OpenAI formatı) için bağlamı başlat
+
             apiContext.push({ role: "assistant", content: firstMessage });
         }
 
@@ -128,114 +187,120 @@ KURALLAR:
             const inputField = document.getElementById('user-input');
             const sendBtn = document.getElementById('send-btn');
             const message = inputField.value.trim();
-            
+
             if (!message || isProcessing) return;
 
             isProcessing = true;
             inputField.disabled = true;
             sendBtn.disabled = true;
-            
-            // 1. Kullanıcı mesajını göster ve kaydet
+
             appendMessage('user', message);
-            logInteraction(studentId, message); // Gönderen olarak öğrenci adını/ID'sini kullan
+            logInteraction(studentId, message);
             inputField.value = '';
-            
-            // 2. Ollama API bağlamını güncelle
+
             apiContext.push({ role: "user", content: message });
 
             const loadingId = appendMessage('bot', 'Düşünüyor...');
 
-            // 3. Ollama için mesaj paketini hazırla (Sistem promptu daima en üstte)
             const messagesToSend = [
                 { role: "system", content: systemPrompts[currentPersona] },
                 ...apiContext
             ];
 
             try {
-                const response = await fetch('http://localhost:11434/api/chat', {
+                // Not: Yerel sunucunuzdan dışarı açıyorsanız localhost kısmını Cloudflare/Ngrok linkiyle değiştirin
+                const response = await fetch('https://uranitic-amberly-uncapable.ngrok-free.dev/api/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         model: 'gemma2:9b',
                         messages: messagesToSend,
                         stream: true,
                         options: {
-                            num_ctx: 4096 
+                            num_ctx: 4096
                         }
                     })
                 });
 
-                // Yükleniyor yazısını kaldır
                 const loader = document.getElementById(loadingId);
                 if (loader) loader.remove();
 
                 if (!response.ok) throw new Error('Sunucu hatası: ' + response.statusText);
 
-                // Yapay zeka için boş bir mesaj kutusu oluştur (kelimeler buraya dolacak)
                 const botMessageId = appendMessage('bot', '');
                 const botMessageDiv = document.getElementById(botMessageId);
                 const messagesDiv = document.getElementById('messages');
 
-                // Akış (Stream) okuyucusunu başlat
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder("utf-8");
                 let aiReply = "";
-                let buffer = ""; // Gelen eksik parçaları birleştirmek için tampon bellek
-
+                let buffer = "";
+                
                 while (true) {
                     const { done, value } = await reader.read();
                     if (done) break;
 
-                    // Gelen veriyi metne çevir ve tampona ekle
                     buffer += decoder.decode(value, { stream: true });
-                    
-                    // Ollama her kelime paketini yeni bir satır (\n) ile ayırır
-                    const lines = buffer.split('\n');
-                    
-                    // Son satır henüz tamamlanmamış olabilir, onu tamponda tut
-                    buffer = lines.pop(); 
+                    const lines = buffer.split(/\r?\n/);
+                    buffer = lines.pop();
 
-                    for (const line of lines) {
-                        if (line.trim() !== '') {
-                            const parsed = JSON.parse(line);
-                            if (parsed.message && parsed.message.content) {
-                                aiReply += parsed.message.content;
-                                botMessageDiv.innerText = aiReply; // UI'ı güncelle
-                                
-                                // Metin uzadıkça ekranı otomatik aşağı kaydır
-                                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    for (let line of lines) {
+                        line = line.trim();
+                        if (line !== '') {
+                            try {
+                                const parsed = JSON.parse(line);
+                                if (parsed.message && parsed.message.content) {
+                                    aiReply += parsed.message.content;
+                                    botMessageDiv.innerText = aiReply;
+                                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                                }
+                            } catch (parseError) {
+                                console.warn("Atlanan bozuk veri paketi:", line);
                             }
                         }
                     }
                 }
 
-                // Akış bittikten sonra tam metni loglara ve bağlama kaydet
+                if (buffer.trim() !== '') {
+                    try {
+                        const parsed = JSON.parse(buffer.trim());
+                        if (parsed.message && parsed.message.content) {
+                            aiReply += parsed.message.content;
+                        }
+                    } catch (e) { }
+                }
+
+                aiReply = aiReply.trim();
+                botMessageDiv.innerText = aiReply; 
+
                 logInteraction('AI', aiReply);
                 apiContext.push({ role: "assistant", content: aiReply });
 
             } catch (error) {
                 const loader = document.getElementById(loadingId);
                 if (loader) loader.remove();
-                
+
                 appendMessage('bot', 'Bağlantı Hatası: Lütfen Ollama sunucusunun çalıştığından emin olun. Hata detayı: ' + error.message);
                 logInteraction('System Error', error.message);
-                apiContext.pop(); 
+                apiContext.pop();
             } finally {
                 isProcessing = false;
                 inputField.disabled = false;
                 sendBtn.disabled = false;
                 inputField.focus();
             }
+        }
 
         function appendMessage(sender, text) {
             const messagesDiv = document.getElementById('messages');
             const msgDiv = document.createElement('div');
             msgDiv.className = `message ${sender}`;
             msgDiv.innerText = text;
-            
+
             const id = 'msg-' + (messageIdCounter++);
             msgDiv.id = id;
-            
+
             messagesDiv.appendChild(msgDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
             return id;
@@ -243,18 +308,19 @@ KURALLAR:
 
         function logInteraction(sender, message) {
             const timestamp = new Date().toLocaleString('tr-TR');
-            const cleanMessage = message.replace(/"/g, '""').replace(/\n/g, ' '); 
+            const cleanMessage = message.replace(/"/g, '""').replace(/\n/g, ' ');
             chatHistory.push(`"${timestamp}","${sender}","${cleanMessage}"`);
         }
 
         function endChat() {
             document.getElementById('chat-container').style.display = 'none';
             document.getElementById('log-container').style.display = 'flex';
-            
+
             const csvHeader = '"Zaman Damgası","Gönderen","Mesaj"\n';
             const csvContent = csvHeader + chatHistory.join('\n');
             document.getElementById('csv-output').value = csvContent;
         }
     </script>
 </body>
+
 </html>
