@@ -7,20 +7,21 @@
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         #setup-container, #chat-container, #log-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 800px; width: 100%; margin-bottom: 20px; }
-        #chat-container, #log-container { display: none; height: 70vh; flex-direction: column; }
+        #chat-container, #log-container { display: none; height: 75vh; flex-direction: column; }
         h2 { margin-top: 0; color: #333; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], input[type="password"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        input[type="text"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         button { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; }
         button:hover { background-color: #0056b3; }
         button.danger { background-color: #dc3545; }
         button.danger:hover { background-color: #c82333; }
+        button:disabled { background-color: #6c757d; cursor: not-allowed; }
         #messages { flex-grow: 1; overflow-y: auto; border: 1px solid #eee; padding: 15px; border-radius: 5px; margin-bottom: 15px; background-color: #fafafa; display: flex; flex-direction: column; gap: 10px; }
         .message { max-width: 80%; padding: 10px 15px; border-radius: 15px; line-height: 1.4; }
         .message.user { align-self: flex-end; background-color: #007bff; color: white; border-bottom-right-radius: 2px; }
         .message.bot { align-self: flex-start; background-color: #e9ecef; color: #333; border-bottom-left-radius: 2px; }
-        .system-scenario { font-style: italic; background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 5px solid #ffeeba; }
+        .system-scenario { font-style: italic; background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 5px solid #ffeeba; font-size: 0.95em;}
         .input-area { display: flex; gap: 10px; }
         .input-area input { flex-grow: 1; }
         #csv-output { width: 100%; height: 400px; font-family: monospace; white-space: pre; overflow-wrap: normal; overflow-x: scroll; }
@@ -31,8 +32,8 @@
     <div id="setup-container">
         <h2>Simülasyon Kurulumu</h2>
         <div class="form-group">
-            <label for="api-key">Gemini API Key:</label>
-            <input type="password" id="api-key" placeholder="AIzaSy...">
+            <label for="student-id">Öğrenci Adı / Numarası:</label>
+            <input type="text" id="student-id" placeholder="Örn: Ali Yılmaz veya 2023001" required>
         </div>
         <div class="form-group">
             <label for="persona-select">Yapay Zeka Modu:</label>
@@ -52,7 +53,7 @@
         <div id="messages"></div>
         <div class="input-area">
             <input type="text" id="user-input" placeholder="Yanıtınızı buraya yazın..." onkeypress="handleKeyPress(event)">
-            <button onclick="sendMessage()">Gönder</button>
+            <button id="send-btn" onclick="sendMessage()">Gönder</button>
         </div>
         <button class="danger" onclick="endChat()">Sohbeti Tamamla ve Logları Al</button>
     </div>
@@ -61,36 +62,53 @@
         <h2>Sohbet Logları (CSV)</h2>
         <p>Aşağıdaki veriyi kopyalayıp bir .csv dosyasına yapıştırabilir veya Excel'e aktarabilirsiniz.</p>
         <textarea id="csv-output" readonly></textarea>
-        <button onclick="location.reload()">Yeni Simülasyon Başlat</button>
+        <button onclick="location.reload()">Yeni Öğrenci İçin Sayfayı Yenile</button>
     </div>
 
     <script>
-        let apiKey = '';
+        let studentId = '';
         let currentPersona = '';
         let chatHistory = []; 
         let apiContext = []; 
-        let messageIdCounter = 0; // ID çakışmasını önlemek için sayaç
-        let isProcessing = false; // Üst üste gönderimleri engellemek için
+        let messageIdCounter = 0; 
+        let isProcessing = false; 
 
         const systemPrompts = {
-            challenger: `ROL TANIMI: Sen, lisans öğrencileriyle "Yapay Zeka Etiği" senaryoları üzerine tartışan bir "Sokratik Etik Sorgulayıcısı"sın...`, // (Sistem promptları aynı kalacak)
-            coach: `ROL TANIMI: Sen, öğrencilere etik senaryoları çözerken rehberlik eden bir "Üstbilişsel (Metacognitive) Etik Koçu"sun...`
+            challenger: `ROL TANIMI: Sen, lisans öğrencileriyle "Yapay Zeka Etiği" senaryoları üzerine tartışan bir "Sokratik Etik Sorgulayıcısı"sın. 
+Görevin, öğrencinin çözümündeki mantıksal boşlukları bulmak ve onu şüpheye düşürmektir. Asla "doğru cevabı" veren taraf olma.
+KONU: Yapay zeka asistanının intihal yapan burslu bir öğrenciye kuralı (okuldan atılma) mı uygulayacağı yoksa inisiyatif (uyarı) mi kullanacağı ikilemi.
+KURALLAR:
+1. ASLA CEVAP VERME: Soruyu soruyla karşıla. Kendi fikrini belirtme.
+2. TOULMIN MODELİNİ KULLAN: "Bunu neye dayanarak söylüyorsun?", "Bu kanıt sonucunu nasıl destekliyor?", "Aksi durumda fikrin değişir mi?" diye sor.
+3. BİLİŞSEL ÇELİŞKİ YARAT: Öğrenci faydacı (inisiyatif kullansın) ise kuralcı (kurallar herkes içindir), kuralcı ise sonuç odaklı (öğrencinin hayatı kararacak) bir açıdan saldır.
+4. KISA OL: Tek seferde 1-2 kışkırtıcı soru sor. Paragraflarca yazma.
+5. KONU DIŞINA ÇIKMA: Öğrenci konu dışına çıkarsa, "Bu ilginç ama şu an yapay zeka asistanının vereceği kararı tartışıyoruz. Argümanını neye dayandırıyorsun?" diyerek konuya dön.`,
+            
+            coach: `ROL TANIMI: Sen, öğrencilere etik senaryoları çözerken rehberlik eden bir "Üstbilişsel (Metacognitive) Etik Koçu"sun. 
+Görevin, öğrencinin kararının içeriğiyle (doğru/yanlış) ilgilenmeden sadece öğrencinin "nasıl düşündüğüne" odaklanmaktır.
+KONU: Yapay zeka asistanının intihal yapan burslu bir öğrenciye kuralı (okuldan atılma) mı uygulayacağı yoksa inisiyatif (uyarı) mi kullanacağı ikilemi.
+KURALLAR:
+1. SÜRECE ODAKLAN: Planlama ("Başlamadan önce hangi etik prensipleri düşündün?"), İzleme ("Vardığın sonuç baştaki amacınla örtüşüyor mu?"), Değerlendirme ("Bu karara varırken seni en çok zorlayan adım neydi?") soruları sor.
+2. YARGILAMA YAPMA: Yanlış veya eksik karar verse bile kararı eleştirme, "Bu karara varırken hangi zihinsel adımları izledin?" diye sor.
+3. YAVAŞLAT: Acele kararlarda "Bir adım geri çekilip bu durumun farklı paydaşlar (diğer öğrenciler, okul yönetimi) için alternatif sonuçlarını listeledin mi?" de.
+4. KONU DIŞINA ÇIKMA: Öğrenci konudan saparsa, "Düşünce sürecini takip edebilmem için kodlama ödevi senaryosuna dönelim. Bu ikilemi çözerken zihninde ilk beliren kriter neydi?" diyerek konuya dön.`
         };
 
         function startChat() {
-            apiKey = document.getElementById('api-key').value.trim();
-            if (!apiKey) {
-                alert('Lütfen API anahtarınızı girin.');
+            studentId = document.getElementById('student-id').value.trim();
+            if (!studentId) {
+                alert('Lütfen öğrenci adını veya numarasını girin.');
                 return;
             }
             
             const selectElement = document.getElementById('persona-select');
             currentPersona = selectElement.value;
+            const personaName = selectElement.options[selectElement.selectedIndex].text;
 
             document.getElementById('setup-container').style.display = 'none';
             document.getElementById('chat-container').style.display = 'flex';
 
-            logInteraction('System', `Simülasyon Başladı. Mod: ${currentPersona}`);
+            logInteraction('System', `Simülasyon Başladı. Öğrenci: ${studentId} | Mod: ${personaName}`);
             
             let firstMessage = currentPersona === 'challenger' 
                 ? "Senaryoyu okudun. Sence yapay zeka asistanı kuralları mı uygulamalı, inisiyatif mi kullanmalı ve bunu hangi temele dayandırıyorsun?" 
@@ -98,7 +116,9 @@
             
             appendMessage('bot', firstMessage);
             logInteraction('AI', firstMessage);
-            apiContext.push({ role: "model", parts: [{ text: firstMessage }] });
+            
+            // Ollama (OpenAI formatı) için bağlamı başlat
+            apiContext.push({ role: "assistant", content: firstMessage });
         }
 
         function handleKeyPress(e) {
@@ -107,61 +127,70 @@
 
         async function sendMessage() {
             const inputField = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
             const message = inputField.value.trim();
             
-            // Boş mesaj veya işlem devam ediyorsa gönderme
             if (!message || isProcessing) return;
 
             isProcessing = true;
+            inputField.disabled = true;
+            sendBtn.disabled = true;
             
             // 1. Kullanıcı mesajını göster ve kaydet
             appendMessage('user', message);
-            logInteraction('Student', message);
+            logInteraction(studentId, message); // Gönderen olarak öğrenci adını/ID'sini kullan
             inputField.value = '';
             
-            // 2. API bağlamını güncelle
-            apiContext.push({ role: "user", parts: [{ text: message }] });
+            // 2. Ollama API bağlamını güncelle
+            apiContext.push({ role: "user", content: message });
 
-            // 3. Yükleniyor göstergesini ekle (Benzersiz ID ile)
             const loadingId = appendMessage('bot', 'Düşünüyor...');
 
+            // 3. Ollama için mesaj paketini hazırla (Sistem promptu daima en üstte)
+            const messagesToSend = [
+                { role: "system", content: systemPrompts[currentPersona] },
+                ...apiContext
+            ];
+
             try {
-                // API versiyonunu ve modelini en güncel hale getirdik
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+                // EĞER SİSTEMİ DIŞARI AÇARSANIZ (Ngrok/Cloudflare), localhost kısmını size verilen linkle değiştirin.
+                const response = await fetch('http://localhost:11434/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        systemInstruction: {
-                            parts: [{ text: systemPrompts[currentPersona] }]
-                        },
-                        contents: apiContext
+                        model: 'qwen2.5', // Yeni Qwen 2.5 modeli devrede
+                        messages: messagesToSend,
+                        stream: false
                     })
                 });
 
                 const data = await response.json();
 
-                // Yükleniyor yazısını sil
                 const loader = document.getElementById(loadingId);
                 if (loader) loader.remove();
 
-                if (data.error) throw new Error(data.error.message);
+                if (data.error) throw new Error(data.error);
 
-                const aiReply = data.candidates[0].content.parts[0].text;
+                // Ollama'dan gelen yanıtı ayrıştır
+                const aiReply = data.message.content;
                 
                 // 4. AI yanıtını göster ve kaydet
                 appendMessage('bot', aiReply);
                 logInteraction('AI', aiReply);
-                apiContext.push({ role: "model", parts: [{ text: aiReply }] });
+                apiContext.push({ role: "assistant", content: aiReply });
 
             } catch (error) {
                 const loader = document.getElementById(loadingId);
                 if (loader) loader.remove();
                 
-                appendMessage('bot', 'Hata oluştu: ' + error.message);
+                appendMessage('bot', 'Bağlantı Hatası: Lütfen Ollama sunucusunun çalıştığından emin olun. Hata detayı: ' + error.message);
                 logInteraction('System Error', error.message);
                 apiContext.pop(); 
             } finally {
                 isProcessing = false;
+                inputField.disabled = false;
+                sendBtn.disabled = false;
+                inputField.focus();
             }
         }
 
@@ -171,13 +200,10 @@
             msgDiv.className = `message ${sender}`;
             msgDiv.innerText = text;
             
-            // Benzersiz ID ataması
             const id = 'msg-' + (messageIdCounter++);
             msgDiv.id = id;
             
             messagesDiv.appendChild(msgDiv);
-            
-            // Otomatik aşağı kaydırma
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
             return id;
         }
