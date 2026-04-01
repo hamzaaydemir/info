@@ -152,7 +152,6 @@ KURALLAR:
             ];
 
             try {
-                // EĞER SİSTEMİ DIŞARI AÇARSANIZ (Ngrok/Cloudflare), localhost kısmını size verilen linkle değiştirin.
                 const response = await fetch('http://localhost:11434/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -161,23 +160,56 @@ KURALLAR:
                         messages: messagesToSend,
                         stream: true,
                         options: {
-                            num_ctx: 4096 // VRAM'i korumak için bağlam hafızasını sınırlandırır
+                            num_ctx: 4096 
                         }
                     })
                 });
 
-                const data = await response.json();
-
+                // Yükleniyor yazısını kaldır
                 const loader = document.getElementById(loadingId);
                 if (loader) loader.remove();
 
-                if (data.error) throw new Error(data.error);
+                if (!response.ok) throw new Error('Sunucu hatası: ' + response.statusText);
 
-                // Ollama'dan gelen yanıtı ayrıştır
-                const aiReply = data.message.content;
-                
-                // 4. AI yanıtını göster ve kaydet
-                appendMessage('bot', aiReply);
+                // Yapay zeka için boş bir mesaj kutusu oluştur (kelimeler buraya dolacak)
+                const botMessageId = appendMessage('bot', '');
+                const botMessageDiv = document.getElementById(botMessageId);
+                const messagesDiv = document.getElementById('messages');
+
+                // Akış (Stream) okuyucusunu başlat
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let aiReply = "";
+                let buffer = ""; // Gelen eksik parçaları birleştirmek için tampon bellek
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    // Gelen veriyi metne çevir ve tampona ekle
+                    buffer += decoder.decode(value, { stream: true });
+                    
+                    // Ollama her kelime paketini yeni bir satır (\n) ile ayırır
+                    const lines = buffer.split('\n');
+                    
+                    // Son satır henüz tamamlanmamış olabilir, onu tamponda tut
+                    buffer = lines.pop(); 
+
+                    for (const line of lines) {
+                        if (line.trim() !== '') {
+                            const parsed = JSON.parse(line);
+                            if (parsed.message && parsed.message.content) {
+                                aiReply += parsed.message.content;
+                                botMessageDiv.innerText = aiReply; // UI'ı güncelle
+                                
+                                // Metin uzadıkça ekranı otomatik aşağı kaydır
+                                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                            }
+                        }
+                    }
+                }
+
+                // Akış bittikten sonra tam metni loglara ve bağlama kaydet
                 logInteraction('AI', aiReply);
                 apiContext.push({ role: "assistant", content: aiReply });
 
@@ -194,7 +226,6 @@ KURALLAR:
                 sendBtn.disabled = false;
                 inputField.focus();
             }
-        }
 
         function appendMessage(sender, text) {
             const messagesDiv = document.getElementById('messages');
