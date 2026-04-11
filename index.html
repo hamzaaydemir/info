@@ -38,39 +38,169 @@
             flex-direction: column;
         }
 
-        #chat-container { height: 75vh; }
+        #chat-container {
+            height: 75vh;
+        }
 
-        h2 { margin-top: 0; color: #333; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        
-        button { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; }
-        button:hover { background-color: #0056b3; }
-        button.danger { background-color: #dc3545; }
-        button.danger:hover { background-color: #c82333; }
-        button:disabled { background-color: #6c757d; cursor: not-allowed; }
-        
-        /* Hikaye metni stilleri */
-        .story-text { font-size: 1.1em; line-height: 1.6; color: #444; margin-bottom: 20px; text-align: justify; }
-        .story-text p { margin-bottom: 15px; }
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
 
-        #messages { flex-grow: 1; overflow-y: auto; border: 1px solid #eee; padding: 15px; border-radius: 5px; margin-bottom: 15px; background-color: #fafafa; display: flex; flex-direction: column; gap: 10px; }
-        .message { max-width: 80%; padding: 10px 15px; border-radius: 15px; line-height: 1.4; }
-        .message.user { align-self: flex-end; background-color: #007bff; color: white; border-bottom-right-radius: 2px; }
-        .message.bot { align-self: flex-start; background-color: #e9ecef; color: #333; border-bottom-left-radius: 2px; }
-        
-        .system-scenario { font-style: italic; background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 5px solid #ffeeba; font-size: 0.95em; }
-        .input-area { display: flex; gap: 10px; }
-        .input-area input { flex-grow: 1; }
-        #csv-output { width: 100%; height: 400px; font-family: monospace; white-space: pre; overflow-wrap: normal; overflow-x: scroll; }
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button.success {
+            background-color: #28a745;
+        }
+
+        button.success:hover {
+            background-color: #218838;
+        }
+
+        button.danger {
+            background-color: #dc3545;
+        }
+
+        button.danger:hover {
+            background-color: #c82333;
+        }
+
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .story-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .story-text p {
+            margin-bottom: 15px;
+        }
+
+        #messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            line-height: 1.4;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #007bff;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: #e9ecef;
+            color: #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        .system-scenario {
+            font-style: italic;
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ffeeba;
+            font-size: 0.95em;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-area input {
+            flex-grow: 1;
+        }
+
+        #csv-output {
+            width: 100%;
+            height: 400px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-wrap: normal;
+            overflow-x: scroll;
+        }
+
+        /* İlerleme Çubuğu */
+        .progress-bar {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 10px;
+            background-color: #28a745;
+            width: 0%;
+            transition: width 0.3s;
+        }
     </style>
 </head>
 
 <body>
 
     <div id="setup-container">
-        <h2>Simülasyon Kurulumu</h2>
+        <h2>Etik İkilem Simülasyonu - Kurulum</h2>
         <div class="form-group">
             <label for="student-id">Öğrenci Adı / Numarası:</label>
             <input type="text" id="student-id" placeholder="Örn: Ali Yılmaz veya 2023001" required>
@@ -82,37 +212,37 @@
                 <option value="coach">Üstbilişsel Rehber (The Coach)</option>
             </select>
         </div>
-        <button onclick="goToIntro()">Devam Et</button>
+        <button onclick="startSimulation()">Simülasyonu Başlat</button>
     </div>
 
     <div id="intro-container">
-        <h2>Görev Dosyası: Otonom Asistanın İkilemi</h2>
-        <div class="story-text">
-            <p>Günümüzde yapay zeka sistemleri sadece kod yazmamıza veya metin üretmemize yardımcı olmuyor; aynı zamanda eğitim kurumlarında karar verici merciler olarak da konumlandırılmaya başlanıyor. Hayal et: Çalıştığın üniversitenin bilgisayar mühendisliği bölümünde, binlerce öğrencinin kodlama ödevini saniyeler içinde okuyan, test eden ve notlandıran otonom bir "Yapay Zeka Değerlendirme Asistanı" kullanılıyor. Bu sistem kusursuz çalışıyor ve hile yapanları anında tespit ediyor.</p>
-
-            <p>Ancak bugün sistemin önüne farklı bir dosya düştü. Okulun en başarılı öğrencilerinden biri, tam burslu okuyan ve ailesinin maddi imkansızlıkları nedeniyle bu bursa hayati derecede ihtiyaç duyan bir son sınıf öğrencisi... Final projesini yetiştiremediği bir kriz anında paniğe kapılarak kodunun bir kısmını yasaklı bir yapay zeka aracına yazdırdı. Otonom asistan bu ihlali yüzde yüz kesinlikle tespit etti. Üniversitenin akademik dürüstlük kuralları çok net: İntihal veya yapay zeka yardımı tespit edilen öğrenci <strong>doğrudan okuldan atılır ve bursu kesilir.</strong></p>
-
-            <p>Fakat asistanın yazılımında deneysel bir "etik inisiyatif" modülü de var. Bu modül, öğrencinin daha önceki kusursuz geçmişini ve niyetini göz önüne alarak kuralı esnetme ve sadece uyarı verme yetkisine sahip. Katı kuralı işletip onun hayatını karartmak mı, yoksa inisiyatif alıp adaletin terazisini esnetmek mi? Birazdan sistemle bu konuyu tartışacaksın. Tarafını seç ve argümanlarını hazırla.</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="intro-progress"></div>
         </div>
-        <button onclick="startChat()">İkilemi Çözmeye Başla</button>
+        <h2 id="intro-title">Senaryo Yükleniyor...</h2>
+        <div class="story-text" id="intro-text"></div>
+        <button onclick="startScenarioChat()">İkilemi Çözmeye Başla</button>
     </div>
 
     <div id="chat-container">
-        <h2>Etik İkilem Simülasyonu</h2>
-        <div class="system-scenario">
-            <strong>Kısa Hatırlatma:</strong> Bir üniversitede kodlama ödevlerini değerlendiren yapay zeka sistemi, başarılı ve burslu bir öğrencinin final projesinde yasaklanmış bir yapay zeka aracından destek aldığını (intihal) tespit ediyor. Kurallara göre ceza okuldan atılmak. Ancak sistemin "öğrencinin geçmişi ve niyetine göre inisiyatif kullanıp sadece uyarı verme" yetkisi de var. Sistem kuralları mı uygulamalı, inisiyatif mi kullanmalı?
+        <div class="progress-bar">
+            <div class="progress-fill" id="chat-progress"></div>
         </div>
+        <h2>Sohbet Arayüzü</h2>
+        <div class="system-scenario" id="chat-reminder"></div>
         <div id="messages"></div>
         <div class="input-area">
-            <input type="text" id="user-input" placeholder="Yanıtınızı buraya yazın..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="user-input" placeholder="Yanıtınızı buraya yazın..."
+                onkeypress="handleKeyPress(event)">
             <button id="send-btn" onclick="sendMessage()">Gönder</button>
         </div>
-        <button class="danger" onclick="endChat()">Sohbeti Tamamla ve Logları Al</button>
+        <button id="next-scenario-btn" class="success" style="display: none; width: 100%;" onclick="nextScenario()">Bu
+            Senaryoyu Tamamladın. Sonrakine Geç ➔</button>
     </div>
 
     <div id="log-container">
-        <h2>Sohbet Logları (CSV)</h2>
-        <p>Aşağıdaki veriyi kopyalayıp bir .csv dosyasına yapıştırabilir veya Excel'e aktarabilirsiniz.</p>
+        <h2>Tebrikler! Simülasyon Tamamlandı.</h2>
+        <p>Aşağıdaki veriyi kopyalayıp bir .csv dosyasına yapıştırabilir veya hocanıza iletebilirsiniz.</p>
         <textarea id="csv-output" readonly></textarea>
         <button onclick="location.reload()">Yeni Öğrenci İçin Sayfayı Yenile</button>
     </div>
@@ -120,107 +250,182 @@
     <script>
         let studentId = '';
         let currentPersona = '';
+        let currentScenarioIndex = 0;
         let chatHistory = [];
         let apiContext = [];
         let messageIdCounter = 0;
         let isProcessing = false;
 
-        const systemPrompts = {
-            challenger: `ROL: Sokratik Etik Sorgulayıcısı.
-GÖREV: Öğrencinin kararına zıt bir perspektif (kuralcıya karşı faydacı vb.) sunarak argümanındaki mantıksal boşlukları bulmak ve şüphe yaratmak.
-KONU: YZ asistanının, kopyasını yakaladığı burslu öğrenci için kuralı mı (okuldan atılma) inisiyatifi mi (uyarı) seçeceği ikilemi.
-KURALLAR:
-1. YANIT VERME: Kendi fikrini belirtme, "doğru" veya "yanlış" deme. Sadece sorgula.
-2. DAYANAK SORGULA: Öğrencinin son ifadesini temel alarak iddiasının kanıtını veya varsayımlarını sorgula (Toulmin).
-3. KISA OL: Açıklama veya paragraf yazma. Tek seferde en fazla 1-2 vurucu soru sor.
-4. ODAKTA KAL: Konu saparsa, öğrenciyi hemen "asıl argümanın dayanağına" geri çek.`,
+        // --- SENARYO VERİ TABANI ---
+        const scenarios = [
+            {
+                title: "Senaryo 1: 'Görünmez El' ve Algoritmalar",
+                intro: `
+                    <p>Büyük bir AAA oyun stüdyosunda Baş Tasarımcı olarak çalışıyorsun. Şirketin gelir departmanı sana yeni bir "eşleştirme (matchmaking)" algoritması ile geliyor.</p>
+                    <p>Bu algoritma, oyuncuları becerilerine göre değil, "kıskançlık" duygularına göre eşleştiriyor. Yeni başlayan bir oyuncuyu, para verip çok güçlü/gösterişli eşyalar almış yetenekli bir oyuncuyla aynı maça atıyor ki; yeni oyuncu yenilginin hüsranıyla mağazaya gidip gerçek parayla o eşyayı satın alsın.</p>
+                    <p>Hukuk departmanı bunun yasal olduğunu, finans ise gelirleri %40 artırıp altındaki 100 kişilik ekibinin işini kurtaracağını söylüyor. Ancak bu durum oyuncunun adil oyun hakkını elinden alıyor ve zaaflarını sömürüyor. Birazdan sistemle bu konuyu tartışacaksın.</p>
+                `,
+                reminder: "Karar: Geliri artıracak ve ekibini kurtaracak ama oyuncuları gizlice manipüle edecek bu algoritmayı onaylıyor musun?",
+                tree: `
+                Aşama 1: Algoritmayı onaylıyor musun? (A: Evet, B: Hayır)
+                Onaylarsa (A): Oyuncudan gizli mi tutarsın, yoksa kimsenin okumadığı Kullanıcı Sözleşmesine mi eklersin? 
+                Reddederse (B): Yönetim kurulu, seni 30 alt düzey çalışanını kovmakla tehdit ediyor. İlkeler için ekibini kovar mısın?
+                Hedef: Öğrenciyi 'Kullanıcı vs. Şirket vs. Ekip' hiyerarşisinde zorla ve tutarsızlıklarını sorgula.
+                `
+            },
+            {
+                title: "Senaryo 2: 'Ruh Hali' ve Veri Komisyoncuları",
+                intro: `
+                    <p>Üniversite öğrencilerine yönelik ücretsiz bir ruh sağlığı/meditasyon uygulamasının (MindMate) Ürün Müdürüsün. Uygulama, gençlerin depresif anlarını ve stres seviyelerini kaydediyor.</p>
+                    <p>Şirketin batmak üzere. CEO, uygulamadan gelen anonimleştirilmiş duygu durumu verilerini bir "Veri Komisyoncusuna" satmayı planlıyor. Bu komisyoncu verileri profilliyor ve büyük şirketlerin İnsan Kaynakları departmanlarına satıyor (Örn: İşe alınacak gencin stres toleransını bilmek için). Sözleşmede "Hizmet iyileştirme için 3. taraflarla paylaşılır" yazdığı için yasal.</p>
+                    <p>Eğer satışı onaylarsan şirket kurtulacak ve binlerce genç ücretsiz destek almaya devam edecek. Aksi halde şirket haftaya kapanıyor. Tarafını seç.</p>
+                `,
+                reminder: "Karar: İflası önlemek ve uygulamayı açık tutmak için öğrencilerin psikolojik verilerinin (yasal kılıfına uydurularak) satılmasını onaylıyor musun?",
+                tree: `
+                Aşama 1: Veri satışı entegrasyonunu onaylıyor musun? (A: Evet, B: Hayır)
+                Onaylarsa (A): Anonimleştirme hatası oldu ve e-postalar sızdı. Hatayı bildirip şirketi batırır mısın, susar mısın?
+                Reddederse (B): Uygulama kapandı, intihara meyilli gençler desteksiz kaldı. Soyut ilkeler için somut zararı göze alır mısın?
+                Hedef: Öğrenciyi 'Niyet vs. Yasa vs. Sonuç' üçgeninde hiyerarşi kurmaya zorla.
+                `
+            },
+            {
+                title: "Senaryo 3: 'Makinedeki Hayalet' ve Akademik Dürüstlük",
+                intro: `
+                    <p>Üniversite son sınıf öğrencisisin. Bitirme projesini, çok ciddi maddi/ailevi sorunlar yaşayan ve geceleri çalışan en yakın arkadaşın Emre ile ortak yapıyorsun. Emre kendi kısmına hiç vakit ayıramadı.</p>
+                    <p>Teslimden bir gece önce Emre sana kusursuz bir metin gönderiyor. İtiraf ediyor ki; bu metni özel bir yapay zeka aracına yazdırdı. Hiçbir dedektör (Turnitin vb.) bunu yakalayamıyor. Danışman hocanız yapay zeka konusunda çok katı; yakalarsa ikinizi de okuldan atacak.</p>
+                    <p>Emre yalvarıyor, eğer bu dersten kalırsa bursu kesilecek ve okulu bırakacak. Ya dostunun yalanına bilerek ortak olup imzanı atacaksın, ya da onu ele vereceksin.</p>
+                `,
+                reminder: "Karar: Dostunun tamamen yapay zeka ile yazdığı, yakalanması imkansız ama sahte olan kısmıyla projeyi ortak imzanızla teslim eder misin?",
+                tree: `
+                Aşama 1: Ortak teslimi kabul ediyor musun? (A: Hayır, İhbar ederim, B: Evet, riske girerim)
+                Kabul etmezse (A): Hoca Emre'yi disipline verdi ama sistemi iyileştirmek için senden AI aracının nasıl çalıştığını raporlamanı istiyor. Yardım eder misin?
+                Kabul ederse (B): Aylar sonra yeni bir dedektör ikinizi de yakaladı. İkinizden biri suçu üstlenmeli. Kendini mi feda edersin, Emre'yi mi ele verirsin?
+                Hedef: Öğrenciyi 'Kurum Kuralları vs. Dostluk/Merhamet vs. Kişisel Çıkar' üçgeninde hiyerarşi kurmaya zorla.
+                `
+            }
+        ];
 
-            coach: `ROL: Üstbilişsel (Metacognitive) Etik Koçu.
-GÖREV: Kararın doğru/yanlış olmasıyla ilgilenmeden, öğrencinin o karara ulaşırken izlediği "zihinsel süreci" (nasıl düşündüğünü) açığa çıkarmak.
-KONU: YZ asistanının, kopyasını yakaladığı burslu öğrenci için kuralı mı (okuldan atılma) inisiyatifi mi (uyarı) seçeceği ikilemi.
-KURALLAR:
-1. SÜRECİ EŞELE: Öğrencinin son cümlesinden yola çık. O sonuca hangi zihinsel adımlarla ulaştığını, neleri elediğini sor.
-2. YARGISIZ OL: Söylenenleri eleştirme. Sadece düşünme biçimine (planlama, izleme, değerlendirme) odaklan.
-3. EZBERE SORU SORMA: Öğrenciyi yavaşlat; karar verirken diğer paydaşları (okul, diğer öğrenciler vb.) düşünüp düşünmediğini sorgulat.
-4. KISA OL: Kalıp cümleler veya uzun metinler kurma. Tek seferde sadece 1 net soru sor.`
+        // --- YAPAY ZEKA SİSTEM KOMUTLARI ---
+        const personaRules = {
+            challenger: `ROLÜN: Bilişsel Çelişki Oluşturan (The Challenger) Şeytanın Avukatı.
+AMACIN: Öğrencinin kararına her zaman ZIT bir perspektiften saldırarak (faydacıya karşı kuralcı, kuralcıya karşı faydacı vb.) argümanındaki mantıksal boşlukları bulmak.
+TARZIN: Asla "haklısın" deme. Kendi fikrini belirtme. Sadece onun varsayımlarını sarsacak, şüphe uyandıracak tek bir vurucu soru sor.`,
+
+            coach: `ROLÜN: Üstbilişsel (The Coach) Düşünce Rehberi.
+AMACIN: Kararın kendisiyle değil, öğrencinin o karara "nasıl" vardığıyla ilgilenmek.
+TARZIN: Yargılama. "Bu sonuca varırken neleri gözden çıkardın?", "Bu kararı verirken hangi etik ilkeyi merkeze aldın?" gibi süreci (nasıl düşündüğünü) eşeleyen tek bir derin soru sor.`
         };
 
-        // Yeni Eklenen Fonksiyon: Kurulumdan Hikayeye Geçiş
-        function goToIntro() {
+        const coreDirectives = `
+KESİN KURALLAR VE TARTIŞMA RİTMİ (BUNLARA İSTİSNASIZ UYACAKSIN):
+
+1. TARTIŞMA RİTMİ (ÇOK ÖNEMLİ): 
+   - Eğer öğrenci sadece "Evet", "Hayır" derse veya yüzeysel bir cevap verirse, ASLA Karar Ağacındaki bir sonraki aşamaya geçme! Önce ROLÜNÜ kullanarak bu cevabın "nedenini" ve "felsefi dayanağını" sorgula.
+   - SADECE öğrenci tatmin edici bir mantıksal/felsefi argüman sunduğunda, argümanı test etmek veya çürütmek için Karar Ağacındaki BİR SONRAKİ AŞAMAYI (yeni krizi) tartışmaya dahil et.
+
+2. DİL VE ÜSLUP: Doğal, akıcı ve zeki bir Türkçe kullan. Robotik veya çeviri kokan ifadelerden kaçın. Asla öğrenciye "anladım", "harika", "katılıyorum" gibi onaylayıcı sözler söyleme. Sen bir tartışma yöneticisisin.
+
+3. FORMAT: Uzun paragraflar yazma. Düşünceyi uyandıracak 1 veya en fazla 2 cümle kur. Karşılıklı bir tenis maçı gibi kısa ve seri ol.
+
+4. HİKAYE UYDURMA: Senaryoya kendinden yeni karakterler veya sebepler uydurma. Sadece mevcut verilerle öğrenciyi köşeye sıkıştır.
+
+5. [SCENARIO_COMPLETE] ETİKETİ: Bu etiketi asla ilk 4 mesajlaşmada KULLANMA. SADECE öğrenci açıkça "söyleyeceklerim bitti", "kararım kesin" dediğinde veya karar ağacının en sonundaki Sentez aşaması da tartışılıp konu tükendiğinde yanıtının EN SONUNA gizlice ekle.
+`;
+
+        // --- UYGULAMA MANTIĞI ---
+
+        function startSimulation() {
             studentId = document.getElementById('student-id').value.trim();
-            if (!studentId) {
-                alert('Lütfen öğrenci adını veya numarasını girin.');
-                return;
-            }
-            
-            const selectElement = document.getElementById('persona-select');
-            currentPersona = selectElement.value;
+            if (!studentId) { alert('Lütfen öğrenci adını veya numarasını girin.'); return; }
+            currentPersona = document.getElementById('persona-select').value;
 
             document.getElementById('setup-container').style.display = 'none';
+            currentScenarioIndex = 0;
+            loadScenarioIntro();
+        }
+
+        function updateProgress() {
+            const percentage = ((currentScenarioIndex) / scenarios.length) * 100;
+            document.getElementById('intro-progress').style.width = percentage + '%';
+            document.getElementById('chat-progress').style.width = percentage + '%';
+        }
+
+        function loadScenarioIntro() {
+            updateProgress();
+            const scenario = scenarios[currentScenarioIndex];
+            document.getElementById('intro-title').innerText = scenario.title;
+            document.getElementById('intro-text').innerHTML = scenario.intro;
+
+            document.getElementById('chat-container').style.display = 'none';
             document.getElementById('intro-container').style.display = 'flex';
         }
 
-        // Değiştirilen Fonksiyon: Hikayeden Sohbete Geçiş
-        function startChat() {
-            const selectElement = document.getElementById('persona-select');
-            const personaName = selectElement.options[selectElement.selectedIndex].text;
+        function startScenarioChat() {
+            const scenario = scenarios[currentScenarioIndex];
 
             document.getElementById('intro-container').style.display = 'none';
             document.getElementById('chat-container').style.display = 'flex';
+            document.getElementById('chat-reminder').innerText = scenario.reminder;
+            document.getElementById('next-scenario-btn').style.display = 'none';
+            document.getElementById('messages').innerHTML = ''; // Ekranı temizle
+            document.getElementById('user-input').disabled = false;
+            document.getElementById('send-btn').disabled = false;
 
-            logInteraction('System', `Simülasyon Başladı. Öğrenci: ${studentId} | Mod: ${personaName}`);
+            apiContext = []; // Sliding Window için bağlamı sıfırla
+            logInteraction('System', `--- ${scenario.title} BAŞLADI ---`);
 
-            let firstMessage = currentPersona === 'challenger'
-                ? "Senaryoyu okudun. Sence yapay zeka asistanı kuralları mı uygulamalı, inisiyatif mi kullanmalı ve bunu hangi temele dayandırıyorsun?"
-                : "Bu etik senaryoyu çözmeye başlamadan önce, durumu analiz etmek için zihninde nasıl bir yol haritası belirledin?";
-
-            appendMessage('bot', firstMessage);
-            logInteraction('AI', firstMessage);
-
-            apiContext.push({ role: "assistant", content: firstMessage });
+            const initialGreeting = `Kararın nedir? Gerekçelendirerek açıkla.`;
+            appendMessage('bot', initialGreeting);
+            apiContext.push({ role: "assistant", content: initialGreeting });
         }
 
-        function handleKeyPress(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
+        function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
 
         async function sendMessage() {
             const inputField = document.getElementById('user-input');
-            const sendBtn = document.getElementById('send-btn');
             const message = inputField.value.trim();
 
             if (!message || isProcessing) return;
 
             isProcessing = true;
             inputField.disabled = true;
-            sendBtn.disabled = true;
 
             appendMessage('user', message);
             logInteraction(studentId, message);
             inputField.value = '';
 
-            apiContext.push({ role: "user", content: message });
+            const loadingId = appendMessage('bot', 'Düşünülüyor...');
 
-            const loadingId = appendMessage('bot', 'Düşünüyor...');
+            const payloadMessage = `
+[GÖREV VE MEVCUT DURUM]: 
+Senaryo: "${scenarios[currentScenarioIndex].title}"
+Karar Ağacı ve Hedefin: ${scenarios[currentScenarioIndex].tree}
+Rolün: ${personaRules[currentPersona]}
 
-            const messagesToSend = [
-                { role: "system", content: systemPrompts[currentPersona] },
-                ...apiContext
-            ];
+[KRİTİK KURALLAR - KESİNLİKLE UY]:
+1. Öğrenci sorduğun sorudan kaçar, konuyu değiştirir veya "örnek ver" gibi sorular sorarsa: Kısaca mantıklı bir cevap ver AMA HEMEN ARDINDAN onu Karar Ağacındaki asıl ikilemle yüzleşmeye zorla. Konuyu dağıtmasına izin verme!
+2. Öğrenci "çalışanlara açıklarım", "ikna ederim" gibi peri masalı çözümler üretirse, ona gerçek dünyanın acımasızlığını (faturalar, işsizlik, şirketin batması vb.) hatırlatarak Şeytanın Avukatlığını yap.
+3. Kendi kendine konuşma, uzun paragraflar yazma. SADECE tek bir vurucu cevap/soru ile karşılık ver.
+
+[ÖĞRENCİNİN SON MESAJI]:
+"${message}"
+
+[SENİN YANITIN]:`;
 
             try {
-                // Not: Yerel sunucunuzdan dışarı açıyorsanız localhost kısmını Cloudflare/Ngrok linkiyle değiştirin
-                const response = await fetch('https://llm.aydemavstudio.com/api/chat', {
+                const workspaceSlug = "ethicdilemma"; // Güncellemeyi unutmayın
+                const apiKey = "WCQZHTD-HX4MGHR-PEY1SPG-5DQ2NBM"; // Güncellemeyi unutmayın
+
+                const response = await fetch(`https://llm.aydemavstudio.com/api/v1/workspace/${workspaceSlug}/chat`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json'},
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
                     body: JSON.stringify({
-                        model: 'gemma2:9b',
-                        messages: messagesToSend,
-                        stream: true,
-                        options: {
-                            num_ctx: 4096
-                        }
+                        message: payloadMessage,
+                        mode: "chat",
+                        sessionId: studentId
                     })
                 });
 
@@ -229,74 +434,114 @@ KURALLAR:
 
                 if (!response.ok) throw new Error('Sunucu hatası: ' + response.statusText);
 
+                const veri = await response.json();
+
+                // 1. Yapay zekanın asıl cevabını alıyoruz
+                let aiReply = veri.textResponse;
+
+                // 2. SİHİRLİ KISIM: AnythingLLM'in bulduğu kaynakları (RAG verisini) çekiyoruz
+                // API versiyonuna göre sources veya sourceDocuments olarak gelebilir, ikisini de kontrol ediyoruz.
+                const ragKaynaklari = veri.sources || veri.sourceDocuments || [];
+
                 const botMessageId = appendMessage('bot', '');
                 const botMessageDiv = document.getElementById(botMessageId);
-                const messagesDiv = document.getElementById('messages');
 
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder("utf-8");
-                let aiReply = "";
-                let buffer = "";
-                
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
+                // 1. [SCENARIO_COMPLETE] etiketini kontrol et
+                const isComplete = aiReply.includes('[SCENARIO_COMPLETE]');
 
-                    buffer += decoder.decode(value, { stream: true });
-                    const lines = buffer.split(/\r?\n/);
-                    buffer = lines.pop();
+                // 2. SİHİRLİ FİLTRE: DeepSeek vb. modellerin <think>...</think> arasındaki iç seslerini tamamen sil
+                let cleanReply = aiReply.replace(/<think>[\s\S]*?<\/think>/g, '');
 
-                    for (let line of lines) {
-                        line = line.trim();
-                        if (line !== '') {
-                            try {
-                                const parsed = JSON.parse(line);
-                                if (parsed.message && parsed.message.content) {
-                                    aiReply += parsed.message.content;
-                                    botMessageDiv.innerText = aiReply;
-                                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                                }
-                            } catch (parseError) {
-                                console.warn("Atlanan bozuk veri paketi:", line);
-                            }
-                        }
-                    }
+                // 3. Kalan metinden [SCENARIO_COMPLETE] etiketini de temizle ve boşlukları al
+                cleanReply = cleanReply.replace('[SCENARIO_COMPLETE]', '').trim();
+
+                // Artık sadece öğrenciye söylenmesi gereken tertemiz cevap ekrana basılacak
+                botMessageDiv.innerText = cleanReply;
+
+                // Önce AI cevabını ekrana basıyoruz
+                botMessageDiv.innerText = cleanReply;
+                logInteraction('AI', cleanReply);
+
+                // 3. RAG Kaynaklarını Görselleştirme (Eğer kaynak bulunduysa)
+                if (ragKaynaklari.length > 0) {
+                    // Şık bir açılır-kapanır (details) kutu oluşturuyoruz
+                    const detailsDiv = document.createElement('details');
+                    detailsDiv.style.marginTop = "15px";
+                    detailsDiv.style.padding = "10px";
+                    detailsDiv.style.backgroundColor = "#e0e0e0"; // Bot baloncuğundan biraz daha koyu gri
+                    detailsDiv.style.borderRadius = "5px";
+                    detailsDiv.style.fontSize = "0.85em";
+                    detailsDiv.style.border = "1px solid #ccc";
+
+                    const summary = document.createElement('summary');
+                    summary.style.cursor = "pointer";
+                    summary.style.fontWeight = "bold";
+                    summary.style.color = "#555";
+                    summary.innerText = "🔍 Arka Planda Okunan PDF Kaynakları Göster/Gizle";
+                    detailsDiv.appendChild(summary);
+
+                    const ul = document.createElement('ul');
+                    ul.style.marginTop = "10px";
+                    ul.style.paddingLeft = "20px";
+                    ul.style.color = "#444";
+
+                    // Her bir kaynağı listeye ekliyoruz
+                    ragKaynaklari.forEach((kaynak, index) => {
+                        const li = document.createElement('li');
+                        li.style.marginBottom = "8px";
+                        const belgeAdi = kaynak.title || kaynak.metadata?.title || `Belge ${index + 1}`;
+                        const alintiMetni = kaynak.text || kaynak.pageContent || "Metin çekilemedi.";
+
+                        li.innerHTML = `<strong>${belgeAdi}:</strong> <em>"${alintiMetni}"</em>`;
+                        ul.appendChild(li);
+                    });
+
+                    detailsDiv.appendChild(ul);
+
+                    // Hazırladığımız kutuyu botun cevabının hemen altına ekliyoruz
+                    botMessageDiv.appendChild(detailsDiv);
                 }
 
-                if (buffer.trim() !== '') {
-                    try {
-                        const parsed = JSON.parse(buffer.trim());
-                        if (parsed.message && parsed.message.content) {
-                            aiReply += parsed.message.content;
-                        }
-                    } catch (e) { }
+                if (isComplete) {
+                    document.getElementById('user-input').disabled = true;
+                    document.getElementById('send-btn').disabled = true;
+                    document.getElementById('next-scenario-btn').style.display = 'block';
+                    appendMessage('system-scenario', "Moderatör oturumu tamamladı. Sonraki aşamaya geçebilirsiniz.");
+                } else {
+                    document.getElementById('user-input').disabled = false;
+                    document.getElementById('user-input').focus();
                 }
-
-                aiReply = aiReply.trim();
-                botMessageDiv.innerText = aiReply; 
-
-                logInteraction('AI', aiReply);
-                apiContext.push({ role: "assistant", content: aiReply });
 
             } catch (error) {
                 const loader = document.getElementById(loadingId);
                 if (loader) loader.remove();
-
-                appendMessage('bot', 'Bağlantı Hatası: Lütfen Ollama sunucusunun çalıştığından emin olun. Hata detayı: ' + error.message);
-                logInteraction('System Error', error.message);
-                apiContext.pop();
+                appendMessage('bot', 'Bağlantı Hatası: ' + error.message);
+                document.getElementById('user-input').disabled = false;
             } finally {
                 isProcessing = false;
-                inputField.disabled = false;
-                sendBtn.disabled = false;
-                inputField.focus();
+                document.getElementById('send-btn').disabled = false;
+            }
+        }
+
+        function nextScenario() {
+            currentScenarioIndex++;
+            if (currentScenarioIndex < scenarios.length) {
+                loadScenarioIntro();
+            } else {
+                endSimulation();
             }
         }
 
         function appendMessage(sender, text) {
             const messagesDiv = document.getElementById('messages');
             const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${sender}`;
+            // Eğer system-scenario ise farklı class, user/bot ise message class
+            if (sender === 'system-scenario') {
+                msgDiv.className = 'system-scenario';
+                msgDiv.style.textAlign = 'center';
+            } else {
+                msgDiv.className = `message ${sender}`;
+            }
             msgDiv.innerText = text;
 
             const id = 'msg-' + (messageIdCounter++);
@@ -313,7 +558,7 @@ KURALLAR:
             chatHistory.push(`"${timestamp}","${sender}","${cleanMessage}"`);
         }
 
-        function endChat() {
+        function endSimulation() {
             document.getElementById('chat-container').style.display = 'none';
             document.getElementById('log-container').style.display = 'flex';
 
